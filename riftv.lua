@@ -1,4 +1,4 @@
-local UILibrary = {}
+local Rift = {}
 
 local TweenService = game:GetService("TweenService")
 local UserInputService = game:GetService("UserInputService")
@@ -9,7 +9,7 @@ local HttpService = game:GetService("HttpService")
 local LocalPlayer = Players.LocalPlayer
 local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 
-local Icons = {
+Rift.Icons = {
 	Home = "rbxassetid://7733960981",
 	Settings = "rbxassetid://7734053495",
 	User = "rbxassetid://7733955740",
@@ -35,7 +35,6 @@ local Icons = {
 	MousePointer = "rbxassetid://7733764331",
 	Zap = "rbxassetid://7734020554",
 	Menu = "rbxassetid://7733764147",
-	MoreHorizontal = "rbxassetid://7733764331",
 	Copy = "rbxassetid://7733717447",
 	Trash = "rbxassetid://7734021595",
 	Edit = "rbxassetid://7734022108",
@@ -45,7 +44,6 @@ local Icons = {
 	Pause = "rbxassetid://7733764331",
 	Stop = "rbxassetid://7734021595",
 	Volume = "rbxassetid://7734020554",
-	VolumeMute = "rbxassetid://7734020554",
 	Maximize = "rbxassetid://7733764147",
 	Minimize = "rbxassetid://7733764331",
 	ExternalLink = "rbxassetid://7734022108",
@@ -58,13 +56,10 @@ local Icons = {
 	Sun = "rbxassetid://7733764271",
 	Cloud = "rbxassetid://7733717447",
 	Wifi = "rbxassetid://7734020554",
-	WifiOff = "rbxassetid://7734020554",
 	Battery = "rbxassetid://7733919333",
-	BatteryCharging = "rbxassetid://7733919333",
 	Power = "rbxassetid://7733764271",
 	Activity = "rbxassetid://7733658504",
 	TrendingUp = "rbxassetid://7734021595",
-	TrendingDown = "rbxassetid://7734020554",
 	BarChart = "rbxassetid://7733919333",
 	PieChart = "rbxassetid://7733764083",
 	Grid = "rbxassetid://7733954058",
@@ -98,18 +93,15 @@ local Icons = {
 	MessageSquare = "rbxassetid://7733764147",
 	MessageCircle = "rbxassetid://7733764331",
 	Phone = "rbxassetid://7733764271",
-	PhoneCall = "rbxassetid://7733764328",
 	Video = "rbxassetid://7734020554",
 	Camera = "rbxassetid://7733919333",
 	Mic = "rbxassetid://7733764147",
-	MicOff = "rbxassetid://7733764331",
 	Music = "rbxassetid://7733764271",
 	Film = "rbxassetid://7734022108",
 	Tv = "rbxassetid://7734021595",
 	Radio = "rbxassetid://7733764328",
 	Rss = "rbxassetid://7733764083",
 	Share = "rbxassetid://7733764331",
-	Share2 = "rbxassetid://7733764271",
 	Send = "rbxassetid://7733764328",
 	Upload = "rbxassetid://7734020554",
 	Download = "rbxassetid://7734021595",
@@ -118,15 +110,10 @@ local Icons = {
 	Folder = "rbxassetid://7734022108",
 	File = "rbxassetid://7733764083",
 	FileText = "rbxassetid://7733764147",
-	FilePlus = "rbxassetid://7733764331",
-	FileMinus = "rbxassetid://7733764271",
 	Scissors = "rbxassetid://7733764328",
 	Clipboard = "rbxassetid://7733717447",
 	Filter = "rbxassetid://7734020554",
 	Sliders = "rbxassetid://7734021595",
-	ToggleLeft = "rbxassetid://7733764083",
-	ToggleRight = "rbxassetid://7733764147",
-	Aperture = "rbxassetid://7733658504",
 	Target = "rbxassetid://7733764331",
 	Crosshair = "rbxassetid://7733764271",
 	Shield = "rbxassetid://7733764328",
@@ -142,29 +129,21 @@ local Icons = {
 	Bold = "rbxassetid://7733919333",
 	Italic = "rbxassetid://7733764147",
 	Underline = "rbxassetid://7733764331",
-	Strikethrough = "rbxassetid://7733764271",
-	Superscript = "rbxassetid://7733764328",
-	Subscript = "rbxassetid://7733717447",
-	Quote = "rbxassetid://7734020554",
 	BookOpen = "rbxassetid://7734021595",
 	Book = "rbxassetid://7733764083",
 	Library = "rbxassetid://7733764147",
-	GraduationCap = "rbxassetid://7733764331",
 	Award = "rbxassetid://7733764271",
 	Trophy = "rbxassetid://7733764328",
-	Medal = "rbxassetid://7733717447",
 	Gift = "rbxassetid://7734020554",
 	Coffee = "rbxassetid://7734021595",
 	Briefcase = "rbxassetid://7733764083",
 	Building = "rbxassetid://7733764147",
-	Home2 = "rbxassetid://7733955740",
 	Truck = "rbxassetid://7733764331",
 	Car = "rbxassetid://7733764271",
 	Plane = "rbxassetid://7733764328",
 	Train = "rbxassetid://7733717447",
 	Ship = "rbxassetid://7734020554",
 	Anchor = "rbxassetid://7734021595",
-	LifeBuoy = "rbxassetid://7733764083",
 	Umbrella = "rbxassetid://7733764147",
 	Thermometer = "rbxassetid://7733764331",
 	Wind = "rbxassetid://7733764271",
@@ -173,117 +152,55 @@ local Icons = {
 	Flashlight = "rbxassetid://7734020554",
 	Bulb = "rbxassetid://7734021595",
 	Plug = "rbxassetid://7733764083",
-	BatteryFull = "rbxassetid://7733919333",
-	BatteryLow = "rbxassetid://7733919333",
-	BatteryMedium = "rbxassetid://7733919333",
 	Tool = "rbxassetid://7733764147",
 	Wrench = "rbxassetid://7733764331",
 	Hammer = "rbxassetid://7733764271",
-	Screwdriver = "rbxassetid://7733764328",
-	Construction = "rbxassetid://7733717447",
-	Factory = "rbxassetid://7734020554",
-	Store = "rbxassetid://7734021595",
-	ShoppingBag = "rbxassetid://7733764083",
-	Tag2 = "rbxassetid://7733764147",
-	Ticket = "rbxassetid://7733764331",
-	DollarBill = "rbxassetid://7733764271",
-	Coins = "rbxassetid://7733764328",
-	Wallet = "rbxassetid://7733717447",
-	Bank = "rbxassetid://7734020554",
-	Landmark = "rbxassetid://7734021595",
-	Hospital = "rbxassetid://7733764083",
-	School = "rbxassetid://7733764147",
-	Church = "rbxassetid://7733764331",
-	Mosque = "rbxassetid://7733764271",
-	Synagogue = "rbxassetid://7733764328",
-	Temple = "rbxassetid://7733717447",
-	Castle = "rbxassetid://7734020554",
-	TreePine = "rbxassetid://7734021595",
-	TreeDeciduous = "rbxassetid://7733764083",
-	Flower = "rbxassetid://7733764147",
-	Leaf = "rbxassetid://7733764331",
-	Sprout = "rbxassetid://7733764271",
-	Seedling = "rbxassetid://7733764328",
-	Recycle = "rbxassetid://7733717447",
-	Trash2 = "rbxassetid://7734021595",
-	Delete = "rbxassetid://7734020554",
-	Eraser = "rbxassetid://7733764083",
-	Paintbrush = "rbxassetid://7733764147",
-	Pencil = "rbxassetid://7733764331",
-	Pen = "rbxassetid://7733764271",
-	Highlighter = "rbxassetid://7733764328",
-	Marker = "rbxassetid://7733717447",
-	Ruler = "rbxassetid://7734020554",
-	Scale = "rbxassetid://7734021595",
-	Gauge = "rbxassetid://7733764083",
-	Speedometer = "rbxassetid://7733764147",
-	Odometer = "rbxassetid://7733764331",
-	Tachometer = "rbxassetid://7733764271",
-	Timer = "rbxassetid://7733764328",
-	Stopwatch = "rbxassetid://7733717447",
-	Hourglass = "rbxassetid://7734020554",
-	History = "rbxassetid://7734021595",
-	RotateCcw = "rbxassetid://7733764083",
-	RotateCw = "rbxassetid://7733764147",
-	Undo = "rbxassetid://7733764331",
-	Redo = "rbxassetid://7733764271",
-	Repeat2 = "rbxassetid://7733764328",
-	Shuffle = "rbxassetid://7733717447",
-	Random = "rbxassetid://7734020554",
-	Dice = "rbxassetid://7734021595",
-	Puzzle = "rbxassetid://7733764083",
-	Extension = "rbxassetid://7733764147",
-	Plugin = "rbxassetid://7733764331",
-	Apps = "rbxassetid://7733764271",
-	Dashboard = "rbxassetid://7733764328",
-	Layout = "rbxassetid://7733717447",
-	Sidebar = "rbxassetid://7734020554",
-	PanelLeft = "rbxassetid://7734021595",
-	PanelRight = "rbxassetid://7733764083",
-	PanelTop = "rbxassetid://7733764147",
-	PanelBottom = "rbxassetid://7733764331",
-	Split = "rbxassetid://7733764271",
-	Columns = "rbxassetid://7733764328",
-	Rows = "rbxassetid://7733717447",
-	GripVertical = "rbxassetid://7734020554",
-	GripHorizontal = "rbxassetid://7734021595",
-	Move = "rbxassetid://7733764083",
-	ArrowUp = "rbxassetid://7733764147",
-	ArrowDown = "rbxassetid://7733764331",
-	ArrowLeft = "rbxassetid://7733764271",
-	ArrowRight = "rbxassetid://7733764328",
-	ArrowUpLeft = "rbxassetid://7733717447",
-	ArrowUpRight = "rbxassetid://7734020554",
-	ArrowDownLeft = "rbxassetid://7734021595",
-	ArrowDownRight = "rbxassetid://7733764083",
-	ChevronsUp = "rbxassetid://7733764147",
-	ChevronsDown = "rbxassetid://7733764331",
-	ChevronsLeft = "rbxassetid://7733764271",
-	ChevronsRight = "rbxassetid://7733764328",
-	CornerUpLeft = "rbxassetid://7733717447",
-	CornerUpRight = "rbxassetid://7734020554",
-	CornerDownLeft = "rbxassetid://7734021595",
-	CornerDownRight = "rbxassetid://7733764083",
-	Fold = "rbxassetid://7733764147",
-	Unfold = "rbxassetid://7733764331",
-	Maximize2 = "rbxassetid://7733764271",
-	Minimize2 = "rbxassetid://7733764328",
-	Fullscreen = "rbxassetid://7733717447",
-	ExitFullscreen = "rbxassetid://7734020554",
-	PictureInPicture = "rbxassetid://7734021595",
-	Cast = "rbxassetid://7733764083",
-	Airplay = "rbxassetid://7733764147",
-	Chromecast = "rbxassetid://7733764331",
-	Bluetooth = "rbxassetid://7733764271",
+	Sword = "rbxassetid://7733764328",
+	Skull = "rbxassetid://7733717447",
+	Ghost = "rbxassetid://7734020554",
+	Sparkles = "rbxassetid://7734021595",
+	Rocket = "rbxassetid://7733764083",
+	Planet = "rbxassetid://7733764147",
+	Atom = "rbxassetid://7733764331",
+	Infinity = "rbxassetid://7733764271",
+	Fingerprint = "rbxassetid://7733764328",
+	Scan = "rbxassetid://7733717447",
+	QrCode = "rbxassetid://7734020554",
+	Barcode = "rbxassetid://7734021595",
+	Aperture = "rbxassetid://7733658504",
+	Focus = "rbxassetid://7733764147",
+	Eye2 = "rbxassetid://7733764331",
+	Glasses = "rbxassetid://7733764271",
+	Smile = "rbxassetid://7733764328",
+	Frown = "rbxassetid://7733717447",
+	Meh = "rbxassetid://7734020554",
+	Laugh = "rbxassetid://7734021595",
+	Annoyed = "rbxassetid://7733764083",
+	Dizzy = "rbxassetid://7733764147",
+	ZapOff = "rbxassetid://7733764331",
+	BatteryCharging = "rbxassetid://7733919333",
+	BatteryFull = "rbxassetid://7733919333",
+	BatteryLow = "rbxassetid://7733919333",
+	BatteryMedium = "rbxassetid://7733919333",
+	WifiOff = "rbxassetid://7734020554",
+	WifiLow = "rbxassetid://7734021595",
+	WifiMid = "rbxassetid://7733764083",
+	WifiHigh = "rbxassetid://7733764147",
+	Bluetooth = "rbxassetid://7733764331",
+	BluetoothOff = "rbxassetid://7733764271",
 	BluetoothConnected = "rbxassetid://7733764328",
-	BluetoothOff = "rbxassetid://7733717447",
-	Nfc = "rbxassetid://7734020554",
-	Qrcode = "rbxassetid://7734021595",
-	Barcode = "rbxassetid://7733764083",
-	Scan = "rbxassetid://7733764147",
-	Fingerprint = "rbxassetid://7733764331",
-	FaceId = "rbxassetid://7733764271",
-	TouchId = "rbxassetid://7733764328",
+	Cast = "rbxassetid://7733717447",
+	Airplay = "rbxassetid://7734020554",
+	Chromecast = "rbxassetid://7734021595",
+	Hdmi = "rbxassetid://7733764083",
+	Usb = "rbxassetid://7733764147",
+	Disc = "rbxassetid://7733764331",
+	Cd = "rbxassetid://7733764271",
+	Dvd = "rbxassetid://7733764328",
+	HardDrive = "rbxassetid://7733717447",
+	SdCard = "rbxassetid://7734020554",
+	SimCard = "rbxassetid://7734021595",
+	Nfc = "rbxassetid://7733764083",
 }
 
 local function Create(instanceType, properties)
@@ -339,33 +256,32 @@ local function MakeDraggable(frame, handle)
 end
 
 local Theme = {
-	Background = Color3.fromRGB(22, 22, 26),
-	Header = Color3.fromRGB(28, 28, 32),
-	TabBackground = Color3.fromRGB(18, 18, 22),
+	Background = Color3.fromRGB(16, 16, 20),
+	Header = Color3.fromRGB(22, 22, 26),
+	TabBackground = Color3.fromRGB(12, 12, 16),
 	TabActive = Color3.fromRGB(255, 255, 255),
-	TabInactive = Color3.fromRGB(130, 130, 140),
+	TabInactive = Color3.fromRGB(120, 120, 130),
 	Text = Color3.fromRGB(255, 255, 255),
-	TextDark = Color3.fromRGB(160, 160, 170),
-	Accent = Color3.fromRGB(88, 101, 242),
-	Separator = Color3.fromRGB(45, 45, 52),
-	Button = Color3.fromRGB(45, 48, 58),
-	ButtonHover = Color3.fromRGB(55, 58, 70),
-	ButtonActive = Color3.fromRGB(65, 68, 82),
-	ToggleOff = Color3.fromRGB(55, 58, 68),
-	ToggleOn = Color3.fromRGB(88, 101, 242),
-	InputBackground = Color3.fromRGB(15, 15, 18),
-	Success = Color3.fromRGB(60, 200, 100),
-	Error = Color3.fromRGB(255, 85, 85),
-	Warning = Color3.fromRGB(255, 180, 60),
-	Info = Color3.fromRGB(88, 165, 255)
+	TextDark = Color3.fromRGB(150, 150, 160),
+	Accent = Color3.fromRGB(99, 102, 241),
+	Separator = Color3.fromRGB(38, 38, 46),
+	Button = Color3.fromRGB(38, 40, 50),
+	ButtonHover = Color3.fromRGB(48, 50, 62),
+	ToggleOff = Color3.fromRGB(48, 50, 60),
+	ToggleOn = Color3.fromRGB(99, 102, 241),
+	InputBackground = Color3.fromRGB(10, 10, 13),
+	Success = Color3.fromRGB(52, 211, 153),
+	Error = Color3.fromRGB(248, 113, 113),
+	Warning = Color3.fromRGB(251, 191, 36),
+	Info = Color3.fromRGB(96, 165, 250)
 }
 
-function UILibrary:CreateWindow(config)
+function Rift:CreateWindow(config)
 	config = config or {}
-	local title = config.title or "UI Library"
+	local title = config.title or "Rift"
 	local subtitle = config.subtitle or ""
-	local iconText = config.text or "UI"
-	local size = config.size or Vector2.new(520, 380)
+	local iconText = config.text or "R"
+	local size = config.size or Vector2.new(540, 400)
 	local accentColor = config.color or Theme.Accent
 	
 	local savedPosition = nil
@@ -375,7 +291,7 @@ function UILibrary:CreateWindow(config)
 	local notifications = {}
 	
 	local ScreenGui = Create("ScreenGui", {
-		Name = "UILibrary_" .. HttpService:GenerateGUID(false),
+		Name = "Rift_" .. HttpService:GenerateGUID(false),
 		Parent = PlayerGui,
 		ResetOnSpawn = false,
 		ZIndexBehavior = Enum.ZIndexBehavior.Sibling
@@ -392,19 +308,14 @@ function UILibrary:CreateWindow(config)
 	})
 	
 	Create("UICorner", {
-		CornerRadius = UDim.new(0, 12),
+		CornerRadius = UDim.new(0, 16),
 		Parent = MainFrame
 	})
 	
 	Create("UIStroke", {
 		Color = Color3.fromRGB(255, 255, 255),
 		Thickness = 1.5,
-		Transparency = 0.8,
-		Parent = MainFrame
-	})
-	
-	Create("UIScale", {
-		Scale = 1,
+		Transparency = 0.85,
 		Parent = MainFrame
 	})
 	
@@ -412,12 +323,12 @@ function UILibrary:CreateWindow(config)
 		Name = "Shadow",
 		Parent = MainFrame,
 		BackgroundTransparency = 1,
-		Position = UDim2.new(0, -20, 0, -20),
-		Size = UDim2.new(1, 40, 1, 40),
+		Position = UDim2.new(0, -25, 0, -25),
+		Size = UDim2.new(1, 50, 1, 50),
 		ZIndex = -1,
 		Image = "rbxassetid://6015897843",
 		ImageColor3 = Color3.fromRGB(0, 0, 0),
-		ImageTransparency = 0.4,
+		ImageTransparency = 0.35,
 		ScaleType = Enum.ScaleType.Slice,
 		SliceCenter = Rect.new(49, 49, 450, 450)
 	})
@@ -427,11 +338,11 @@ function UILibrary:CreateWindow(config)
 		Parent = MainFrame,
 		BackgroundColor3 = Theme.Header,
 		BorderSizePixel = 0,
-		Size = UDim2.new(1, 0, 0, 65)
+		Size = UDim2.new(1, 0, 0, 70)
 	})
 	
 	Create("UICorner", {
-		CornerRadius = UDim.new(0, 12),
+		CornerRadius = UDim.new(0, 16),
 		Parent = Header
 	})
 	
@@ -440,20 +351,44 @@ function UILibrary:CreateWindow(config)
 		Parent = Header,
 		BackgroundColor3 = Theme.Header,
 		BorderSizePixel = 0,
-		Position = UDim2.new(0, 0, 1, -10),
-		Size = UDim2.new(1, 0, 0, 10)
+		Position = UDim2.new(0, 0, 1, -12),
+		Size = UDim2.new(1, 0, 0, 12)
+	})
+	
+	local LogoContainer = Create("Frame", {
+		Name = "LogoContainer",
+		Parent = Header,
+		BackgroundColor3 = accentColor,
+		BorderSizePixel = 0,
+		Position = UDim2.new(0, 18, 0, 14),
+		Size = UDim2.new(0, 38, 0, 38)
+	})
+	
+	Create("UICorner", {
+		CornerRadius = UDim.new(0, 10),
+		Parent = LogoContainer
+	})
+	
+	local LogoIcon = Create("ImageLabel", {
+		Name = "LogoIcon",
+		Parent = LogoContainer,
+		BackgroundTransparency = 1,
+		Position = UDim2.new(0.5, -10, 0.5, -10),
+		Size = UDim2.new(0, 20, 0, 20),
+		Image = Rift.Icons.Zap,
+		ImageColor3 = Color3.fromRGB(255, 255, 255)
 	})
 	
 	local TitleLabel = Create("TextLabel", {
 		Name = "Title",
 		Parent = Header,
 		BackgroundTransparency = 1,
-		Position = UDim2.new(0, 18, 0, 12),
-		Size = UDim2.new(1, -140, 0, 22),
+		Position = UDim2.new(0, 66, 0, 14),
+		Size = UDim2.new(1, -180, 0, 24),
 		Font = Enum.Font.GothamBold,
 		Text = title,
 		TextColor3 = Theme.Text,
-		TextSize = 18,
+		TextSize = 20,
 		TextXAlignment = Enum.TextXAlignment.Left
 	})
 	
@@ -461,8 +396,8 @@ function UILibrary:CreateWindow(config)
 		Name = "Subtitle",
 		Parent = Header,
 		BackgroundTransparency = 1,
-		Position = UDim2.new(0, 18, 0, 36),
-		Size = UDim2.new(1, -140, 0, 16),
+		Position = UDim2.new(0, 66, 0, 38),
+		Size = UDim2.new(1, -180, 0, 16),
 		Font = Enum.Font.Gotham,
 		Text = subtitle,
 		TextColor3 = Theme.TextDark,
@@ -474,17 +409,17 @@ function UILibrary:CreateWindow(config)
 		Name = "PingContainer",
 		Parent = Header,
 		BackgroundTransparency = 1,
-		Position = UDim2.new(1, -130, 0, 10),
-		Size = UDim2.new(0, 60, 0, 22)
+		Position = UDim2.new(1, -140, 0, 12),
+		Size = UDim2.new(0, 70, 0, 24)
 	})
 	
 	local PingIcon = Create("ImageLabel", {
 		Name = "PingIcon",
 		Parent = PingContainer,
 		BackgroundTransparency = 1,
-		Position = UDim2.new(0, 0, 0.5, -6),
-		Size = UDim2.new(0, 12, 0, 12),
-		Image = Icons.Activity,
+		Position = UDim2.new(0, 0, 0.5, -7),
+		Size = UDim2.new(0, 14, 0, 14),
+		Image = Rift.Icons.Activity,
 		ImageColor3 = Theme.Success
 	})
 	
@@ -492,8 +427,8 @@ function UILibrary:CreateWindow(config)
 		Name = "Ping",
 		Parent = PingContainer,
 		BackgroundTransparency = 1,
-		Position = UDim2.new(0, 16, 0, 0),
-		Size = UDim2.new(1, -16, 1, 0),
+		Position = UDim2.new(0, 18, 0, 0),
+		Size = UDim2.new(1, -18, 1, 0),
 		Font = Enum.Font.GothamMedium,
 		Text = "0 ms",
 		TextColor3 = Theme.TextDark,
@@ -505,9 +440,9 @@ function UILibrary:CreateWindow(config)
 		Name = "HideButton",
 		Parent = Header,
 		BackgroundTransparency = 1,
-		Position = UDim2.new(1, -70, 0, 8),
-		Size = UDim2.new(0, 28, 0, 28),
-		Image = Icons.Minus,
+		Position = UDim2.new(1, -75, 0, 10),
+		Size = UDim2.new(0, 30, 0, 30),
+		Image = Rift.Icons.Minus,
 		ImageColor3 = Theme.TextDark,
 		AutoButtonColor = false
 	})
@@ -516,9 +451,9 @@ function UILibrary:CreateWindow(config)
 		Name = "CloseButton",
 		Parent = Header,
 		BackgroundTransparency = 1,
-		Position = UDim2.new(1, -40, 0, 8),
-		Size = UDim2.new(0, 28, 0, 28),
-		Image = Icons.X,
+		Position = UDim2.new(1, -42, 0, 10),
+		Size = UDim2.new(0, 30, 0, 30),
+		Image = Rift.Icons.X,
 		ImageColor3 = Theme.Error,
 		AutoButtonColor = false
 	})
@@ -539,14 +474,14 @@ function UILibrary:CreateWindow(config)
 		Parent = ModalOverlay,
 		BackgroundColor3 = Theme.Background,
 		BorderSizePixel = 0,
-		Position = UDim2.new(0.5, -160, 0.5, -80),
-		Size = UDim2.new(0, 320, 0, 160),
+		Position = UDim2.new(0.5, -170, 0.5, -90),
+		Size = UDim2.new(0, 340, 0, 180),
 		ZIndex = 101,
 		BackgroundTransparency = 1
 	})
 	
 	Create("UICorner", {
-		CornerRadius = UDim.new(0, 12),
+		CornerRadius = UDim.new(0, 16),
 		Parent = ConfirmModal
 	})
 	
@@ -560,38 +495,41 @@ function UILibrary:CreateWindow(config)
 		Name = "Icon",
 		Parent = ConfirmModal,
 		BackgroundTransparency = 1,
-		Position = UDim2.new(0.5, -20, 0, 15),
-		Size = UDim2.new(0, 40, 0, 40),
-		Image = Icons.AlertCircle,
+		Position = UDim2.new(0.5, -24, 0, 18),
+		Size = UDim2.new(0, 48, 0, 48),
+		Image = Rift.Icons.AlertCircle,
 		ImageColor3 = Theme.Warning,
-		ZIndex = 102
+		ZIndex = 102,
+		ImageTransparency = 1
 	})
 	
 	local ModalTitle = Create("TextLabel", {
 		Name = "Title",
 		Parent = ConfirmModal,
 		BackgroundTransparency = 1,
-		Position = UDim2.new(0, 0, 0, 60),
-		Size = UDim2.new(1, 0, 0, 22),
+		Position = UDim2.new(0, 0, 0, 72),
+		Size = UDim2.new(1, 0, 0, 24),
 		Font = Enum.Font.GothamBold,
-		Text = "Close UI?",
+		Text = "Close Rift?",
 		TextColor3 = Theme.Text,
-		TextSize = 16,
-		ZIndex = 102
+		TextSize = 18,
+		ZIndex = 102,
+		TextTransparency = 1
 	})
 	
 	local ModalText = Create("TextLabel", {
 		Name = "Text",
 		Parent = ConfirmModal,
 		BackgroundTransparency = 1,
-		Position = UDim2.new(0, 20, 0, 85),
-		Size = UDim2.new(1, -40, 0, 30),
+		Position = UDim2.new(0, 25, 0, 100),
+		Size = UDim2.new(1, -50, 0, 36),
 		Font = Enum.Font.Gotham,
-		Text = "Are you sure you want to close the UI?",
+		Text = "Are you sure you want to close Rift?",
 		TextColor3 = Theme.TextDark,
-		TextSize = 12,
+		TextSize = 13,
 		TextWrapped = true,
-		ZIndex = 102
+		ZIndex = 102,
+		TextTransparency = 1
 	})
 	
 	local ConfirmButton = Create("TextButton", {
@@ -599,17 +537,19 @@ function UILibrary:CreateWindow(config)
 		Parent = ConfirmModal,
 		BackgroundColor3 = Theme.Error,
 		BorderSizePixel = 0,
-		Position = UDim2.new(0, 25, 1, -50),
-		Size = UDim2.new(0.5, -35, 0, 32),
+		Position = UDim2.new(0, 30, 1, -55),
+		Size = UDim2.new(0.5, -40, 0, 36),
 		Font = Enum.Font.GothamBold,
 		Text = "Confirm",
 		TextColor3 = Theme.Text,
-		TextSize = 13,
-		ZIndex = 102
+		TextSize = 14,
+		ZIndex = 102,
+		BackgroundTransparency = 1,
+		TextTransparency = 1
 	})
 	
 	Create("UICorner", {
-		CornerRadius = UDim.new(0, 8),
+		CornerRadius = UDim.new(0, 10),
 		Parent = ConfirmButton
 	})
 	
@@ -618,17 +558,19 @@ function UILibrary:CreateWindow(config)
 		Parent = ConfirmModal,
 		BackgroundColor3 = Theme.Button,
 		BorderSizePixel = 0,
-		Position = UDim2.new(0.5, 10, 1, -50),
-		Size = UDim2.new(0.5, -35, 0, 32),
+		Position = UDim2.new(0.5, 10, 1, -55),
+		Size = UDim2.new(0.5, -40, 0, 36),
 		Font = Enum.Font.GothamBold,
 		Text = "Decline",
 		TextColor3 = Theme.Text,
-		TextSize = 13,
-		ZIndex = 102
+		TextSize = 14,
+		ZIndex = 102,
+		BackgroundTransparency = 1,
+		TextTransparency = 1
 	})
 	
 	Create("UICorner", {
-		CornerRadius = UDim.new(0, 8),
+		CornerRadius = UDim.new(0, 10),
 		Parent = DeclineButton
 	})
 	
@@ -637,8 +579,8 @@ function UILibrary:CreateWindow(config)
 		Parent = ScreenGui,
 		BackgroundColor3 = Theme.Background,
 		BorderSizePixel = 0,
-		Size = UDim2.new(0, 55, 0, 55),
-		Position = UDim2.new(0.5, -27, 0.9, 0),
+		Size = UDim2.new(0, 60, 0, 60),
+		Position = UDim2.new(0.5, -30, 0.9, 0),
 		Visible = false,
 		ZIndex = 50
 	})
@@ -652,8 +594,8 @@ function UILibrary:CreateWindow(config)
 		Name = "Shadow",
 		Parent = DraggableIcon,
 		BackgroundTransparency = 1,
-		Position = UDim2.new(0, -8, 0, -8),
-		Size = UDim2.new(1, 16, 1, 16),
+		Position = UDim2.new(0, -10, 0, -10),
+		Size = UDim2.new(1, 20, 1, 20),
 		ZIndex = 49,
 		Image = "rbxassetid://6015897843",
 		ImageColor3 = Color3.fromRGB(0, 0, 0),
@@ -666,16 +608,16 @@ function UILibrary:CreateWindow(config)
 		Name = "IconImage",
 		Parent = DraggableIcon,
 		BackgroundTransparency = 1,
-		Position = UDim2.new(0.5, -12, 0.5, -12),
-		Size = UDim2.new(0, 24, 0, 24),
-		Image = Icons.Zap,
+		Position = UDim2.new(0.5, -14, 0.5, -14),
+		Size = UDim2.new(0, 28, 0, 28),
+		Image = Rift.Icons.Zap,
 		ImageColor3 = accentColor,
 		ZIndex = 51
 	})
 	
 	local IconStroke = Create("UIStroke", {
 		Color = accentColor,
-		Thickness = 2.5,
+		Thickness = 3,
 		Parent = DraggableIcon
 	})
 	
@@ -683,8 +625,8 @@ function UILibrary:CreateWindow(config)
 		Name = "Content",
 		Parent = MainFrame,
 		BackgroundTransparency = 1,
-		Position = UDim2.new(0, 0, 0, 65),
-		Size = UDim2.new(1, 0, 1, -65)
+		Position = UDim2.new(0, 0, 0, 70),
+		Size = UDim2.new(1, 0, 1, -70)
 	})
 	
 	local TabContainer = Create("Frame", {
@@ -692,7 +634,7 @@ function UILibrary:CreateWindow(config)
 		Parent = ContentFrame,
 		BackgroundColor3 = Theme.TabBackground,
 		BorderSizePixel = 0,
-		Size = UDim2.new(0, 130, 1, 0)
+		Size = UDim2.new(0, 140, 1, 0)
 	})
 	
 	Create("UICorner", {
@@ -704,8 +646,8 @@ function UILibrary:CreateWindow(config)
 		Name = "TabList",
 		Parent = TabContainer,
 		BackgroundTransparency = 1,
-		Position = UDim2.new(0, 8, 0, 8),
-		Size = UDim2.new(1, -16, 1, -80),
+		Position = UDim2.new(0, 10, 0, 10),
+		Size = UDim2.new(1, -20, 1, -75),
 		ScrollBarThickness = 2,
 		ScrollBarImageColor3 = Theme.Separator,
 		CanvasSize = UDim2.new(0, 0, 0, 0),
@@ -714,7 +656,7 @@ function UILibrary:CreateWindow(config)
 	
 	Create("UIListLayout", {
 		Parent = TabList,
-		Padding = UDim.new(0, 4),
+		Padding = UDim.new(0, 6),
 		SortOrder = Enum.SortOrder.LayoutOrder
 	})
 	
@@ -722,16 +664,16 @@ function UILibrary:CreateWindow(config)
 		Name = "TabContent",
 		Parent = ContentFrame,
 		BackgroundTransparency = 1,
-		Position = UDim2.new(0, 130, 0, 0),
-		Size = UDim2.new(1, -130, 1, 0)
+		Position = UDim2.new(0, 140, 0, 0),
+		Size = UDim2.new(1, -140, 1, 0)
 	})
 	
 	local ProfileSection = Create("Frame", {
 		Name = "ProfileSection",
 		Parent = TabContainer,
 		BackgroundTransparency = 1,
-		Position = UDim2.new(0, 8, 1, -65),
-		Size = UDim2.new(1, -16, 0, 55)
+		Position = UDim2.new(0, 10, 1, -60),
+		Size = UDim2.new(1, -20, 0, 50)
 	})
 	
 	local ProfileSeparator = Create("Frame", {
@@ -748,8 +690,8 @@ function UILibrary:CreateWindow(config)
 		Parent = ProfileSection,
 		BackgroundColor3 = Theme.Button,
 		BorderSizePixel = 0,
-		Position = UDim2.new(0, 5, 0, 12),
-		Size = UDim2.new(0, 32, 0, 32),
+		Position = UDim2.new(0, 5, 0, 10),
+		Size = UDim2.new(0, 34, 0, 34),
 		Image = ""
 	})
 	
@@ -758,16 +700,22 @@ function UILibrary:CreateWindow(config)
 		Parent = AvatarImage
 	})
 	
+	local AvatarStroke = Create("UIStroke", {
+		Color = accentColor,
+		Thickness = 2,
+		Parent = AvatarImage
+	})
+	
 	local UsernameLabel = Create("TextLabel", {
 		Name = "Username",
 		Parent = ProfileSection,
 		BackgroundTransparency = 1,
-		Position = UDim2.new(0, 45, 0, 14),
-		Size = UDim2.new(1, -50, 0, 28),
+		Position = UDim2.new(0, 48, 0, 12),
+		Size = UDim2.new(1, -55, 0, 30),
 		Font = Enum.Font.GothamBold,
 		Text = LocalPlayer.Name,
 		TextColor3 = Theme.Text,
-		TextSize = 12,
+		TextSize = 13,
 		TextXAlignment = Enum.TextXAlignment.Left,
 		TextTruncate = Enum.TextTruncate.AtEnd
 	})
@@ -787,11 +735,11 @@ function UILibrary:CreateWindow(config)
 			PingLabel.Text = ping .. " ms"
 			
 			if ping < 100 then
-				PingIcon.ImageColor3 = Theme.Success
+				Tween(PingIcon, {ImageColor3 = Theme.Success}, 0.3)
 			elseif ping < 200 then
-				PingIcon.ImageColor3 = Theme.Warning
+				Tween(PingIcon, {ImageColor3 = Theme.Warning}, 0.3)
 			else
-				PingIcon.ImageColor3 = Theme.Error
+				Tween(PingIcon, {ImageColor3 = Theme.Error}, 0.3)
 			end
 			
 			task.wait(1)
@@ -800,60 +748,46 @@ function UILibrary:CreateWindow(config)
 	task.spawn(UpdatePing)
 	
 	HideButton.MouseEnter:Connect(function()
-		Tween(HideButton, {ImageColor3 = Theme.Text}, 0.2)
+		Tween(HideButton, {ImageColor3 = Theme.Text, Size = UDim2.new(0, 32, 0, 32)}, 0.2)
 	end)
 	
 	HideButton.MouseLeave:Connect(function()
-		Tween(HideButton, {ImageColor3 = Theme.TextDark}, 0.2)
+		Tween(HideButton, {ImageColor3 = Theme.TextDark, Size = UDim2.new(0, 30, 0, 30)}, 0.2)
 	end)
 	
 	CloseButton.MouseEnter:Connect(function()
-		Tween(CloseButton, {ImageColor3 = Color3.fromRGB(255, 120, 120)}, 0.2)
+		Tween(CloseButton, {ImageColor3 = Color3.fromRGB(255, 130, 130), Size = UDim2.new(0, 32, 0, 32)}, 0.2)
 	end)
 	
 	CloseButton.MouseLeave:Connect(function()
-		Tween(CloseButton, {ImageColor3 = Theme.Error}, 0.2)
+		Tween(CloseButton, {ImageColor3 = Theme.Error, Size = UDim2.new(0, 30, 0, 30)}, 0.2)
 	end)
 	
 	local function OpenModal()
 		ModalOverlay.Visible = true
-		Tween(ModalOverlay, {BackgroundTransparency = 0.6}, 0.2)
-		ConfirmModal.Position = UDim2.new(0.5, -160, 0.5, -60)
-		ConfirmModal.BackgroundTransparency = 1
-		ModalIcon.ImageTransparency = 1
-		ModalTitle.TextTransparency = 1
-		ModalText.TextTransparency = 1
-		ConfirmButton.BackgroundTransparency = 1
-		ConfirmButton.TextTransparency = 1
-		DeclineButton.BackgroundTransparency = 1
-		DeclineButton.TextTransparency = 1
-		
-		Tween(ConfirmModal, {Position = UDim2.new(0.5, -160, 0.5, -80), BackgroundTransparency = 0}, 0.3)
-		task.wait(0.1)
-		Tween(ModalIcon, {ImageTransparency = 0}, 0.2)
-		task.wait(0.05)
-		Tween(ModalTitle, {TextTransparency = 0}, 0.2)
-		Tween(ModalText, {TextTransparency = 0}, 0.2)
-		task.wait(0.05)
-		Tween(ConfirmButton, {BackgroundTransparency = 0, TextTransparency = 0}, 0.2)
-		Tween(DeclineButton, {BackgroundTransparency = 0, TextTransparency = 0}, 0.2)
+		Tween(ModalOverlay, {BackgroundTransparency = 0.65}, 0.25)
+		Tween(ConfirmModal, {BackgroundTransparency = 0}, 0.3, Enum.EasingStyle.Back)
+		Tween(ModalIcon, {ImageTransparency = 0}, 0.3)
+		Tween(ModalTitle, {TextTransparency = 0}, 0.3)
+		Tween(ModalText, {TextTransparency = 0}, 0.3)
+		Tween(ConfirmButton, {BackgroundTransparency = 0, TextTransparency = 0}, 0.3)
+		Tween(DeclineButton, {BackgroundTransparency = 0, TextTransparency = 0}, 0.3)
 	end
 	
 	local function CloseModal()
 		Tween(ModalOverlay, {BackgroundTransparency = 1}, 0.2)
-		Tween(ConfirmModal, {Position = UDim2.new(0.5, -160, 0.5, -60), BackgroundTransparency = 1}, 0.2)
+		Tween(ConfirmModal, {BackgroundTransparency = 1}, 0.2)
 		Tween(ModalIcon, {ImageTransparency = 1}, 0.2)
 		Tween(ModalTitle, {TextTransparency = 1}, 0.2)
 		Tween(ModalText, {TextTransparency = 1}, 0.2)
 		Tween(ConfirmButton, {BackgroundTransparency = 1, TextTransparency = 1}, 0.2)
 		Tween(DeclineButton, {BackgroundTransparency = 1, TextTransparency = 1}, 0.2)
-		
 		task.wait(0.2)
 		ModalOverlay.Visible = false
 	end
 	
 	ConfirmButton.MouseEnter:Connect(function()
-		Tween(ConfirmButton, {BackgroundColor3 = Color3.fromRGB(255, 100, 100)}, 0.2)
+		Tween(ConfirmButton, {BackgroundColor3 = Color3.fromRGB(255, 110, 110)}, 0.2)
 	end)
 	
 	ConfirmButton.MouseLeave:Connect(function()
@@ -869,8 +803,8 @@ function UILibrary:CreateWindow(config)
 	end)
 	
 	ConfirmButton.MouseButton1Click:Connect(function()
-		Tween(ConfirmButton, {Size = UDim2.new(0.5, -37, 0, 30)}, 0.05).Completed:Connect(function()
-			Tween(ConfirmButton, {Size = UDim2.new(0.5, -35, 0, 32)}, 0.05)
+		Tween(ConfirmButton, {Size = UDim2.new(0.5, -42, 0, 34)}, 0.05).Completed:Connect(function()
+			Tween(ConfirmButton, {Size = UDim2.new(0.5, -40, 0, 36)}, 0.05)
 		end)
 		CloseModal()
 		task.wait(0.2)
@@ -878,15 +812,15 @@ function UILibrary:CreateWindow(config)
 	end)
 	
 	DeclineButton.MouseButton1Click:Connect(function()
-		Tween(DeclineButton, {Size = UDim2.new(0.5, -37, 0, 30)}, 0.05).Completed:Connect(function()
-			Tween(DeclineButton, {Size = UDim2.new(0.5, -35, 0, 32)}, 0.05)
+		Tween(DeclineButton, {Size = UDim2.new(0.5, -42, 0, 34)}, 0.05).Completed:Connect(function()
+			Tween(DeclineButton, {Size = UDim2.new(0.5, -40, 0, 36)}, 0.05)
 		end)
 		CloseModal()
 	end)
 	
 	CloseButton.MouseButton1Click:Connect(function()
-		Tween(CloseButton, {Size = UDim2.new(0, 26, 0, 26), Position = UDim2.new(1, -39, 0, 9)}, 0.05).Completed:Connect(function()
-			Tween(CloseButton, {Size = UDim2.new(0, 28, 0, 28), Position = UDim2.new(1, -40, 0, 8)}, 0.05)
+		Tween(CloseButton, {Size = UDim2.new(0, 28, 0, 28)}, 0.05).Completed:Connect(function()
+			Tween(CloseButton, {Size = UDim2.new(0, 30, 0, 30)}, 0.05)
 		end)
 		OpenModal()
 	end)
@@ -897,30 +831,26 @@ function UILibrary:CreateWindow(config)
 		if isOpen then
 			DraggableIcon.Visible = false
 			MainFrame.Visible = true
-			MainFrame.Size = UDim2.new(0, size.X * 0.92, 0, size.Y * 0.92)
-			MainFrame.BackgroundTransparency = 1
-			Tween(MainFrame, {Size = UDim2.new(0, size.X, 0, size.Y), BackgroundTransparency = 0}, 0.35, Enum.EasingStyle.Back)
+			MainFrame.Size = UDim2.new(0, size.X * 0.9, 0, size.Y * 0.9)
+			Tween(MainFrame, {Size = UDim2.new(0, size.X, 0, size.Y), BackgroundTransparency = 0}, 0.4, Enum.EasingStyle.Back)
 			
 			if savedPosition then
-				MainFrame.Position = savedPosition
+				Tween(MainFrame, {Position = savedPosition}, 0.4, Enum.EasingStyle.Back)
 			end
 		else
 			savedPosition = MainFrame.Position
-			Tween(MainFrame, {Size = UDim2.new(0, size.X * 0.92, 0, size.Y * 0.92), BackgroundTransparency = 1}, 0.3).Completed:Connect(function()
+			Tween(MainFrame, {Size = UDim2.new(0, size.X * 0.9, 0, size.Y * 0.9), BackgroundTransparency = 1}, 0.35).Completed:Connect(function()
 				MainFrame.Visible = false
 				DraggableIcon.Visible = true
-				DraggableIcon.BackgroundTransparency = 1
-				IconImage.ImageTransparency = 1
 				Tween(DraggableIcon, {BackgroundTransparency = 0}, 0.25)
 				Tween(IconImage, {ImageTransparency = 0}, 0.25)
+				Tween(IconStroke, {Transparency = 0}, 0.25)
 			end)
 		end
 	end
 	
 	HideButton.MouseButton1Click:Connect(function()
-		Tween(HideButton, {Size = UDim2.new(0, 26, 0, 26), Position = UDim2.new(1, -69, 0, 9)}, 0.05).Completed:Connect(function()
-			Tween(HideButton, {Size = UDim2.new(0, 28, 0, 28), Position = UDim2.new(1, -70, 0, 8)}, 0.05)
-		end)
+		Tween(HideButton, {Rotation = 180}, 0.3)
 		ToggleUI()
 	end)
 	
@@ -933,13 +863,15 @@ function UILibrary:CreateWindow(config)
 	end)
 	
 	DraggableIcon.MouseEnter:Connect(function()
-		Tween(DraggableIcon, {Size = UDim2.new(0, 60, 0, 60)}, 0.2)
-		Tween(IconStroke, {Thickness = 3.5}, 0.2)
+		Tween(DraggableIcon, {Size = UDim2.new(0, 68, 0, 68)}, 0.25, Enum.EasingStyle.Back)
+		Tween(IconStroke, {Thickness = 4}, 0.25)
+		Tween(IconImage, {Rotation = 15}, 0.25)
 	end)
 	
 	DraggableIcon.MouseLeave:Connect(function()
-		Tween(DraggableIcon, {Size = UDim2.new(0, 55, 0, 55)}, 0.2)
-		Tween(IconStroke, {Thickness = 2.5}, 0.2)
+		Tween(DraggableIcon, {Size = UDim2.new(0, 60, 0, 60)}, 0.25)
+		Tween(IconStroke, {Thickness = 3}, 0.25)
+		Tween(IconImage, {Rotation = 0}, 0.25)
 	end)
 	
 	local WindowAPI = {}
@@ -950,14 +882,14 @@ function UILibrary:CreateWindow(config)
 			Parent = TabList,
 			BackgroundColor3 = Theme.TabBackground,
 			BorderSizePixel = 0,
-			Size = UDim2.new(1, -5, 0, 36),
+			Size = UDim2.new(1, -5, 0, 40),
 			Font = Enum.Font.GothamMedium,
 			Text = "",
 			AutoButtonColor = false
 		})
 		
 		Create("UICorner", {
-			CornerRadius = UDim.new(0, 8),
+			CornerRadius = UDim.new(0, 10),
 			Parent = TabButton
 		})
 		
@@ -965,9 +897,9 @@ function UILibrary:CreateWindow(config)
 			Name = "Icon",
 			Parent = TabButton,
 			BackgroundTransparency = 1,
-			Position = UDim2.new(0, 10, 0.5, -8),
-			Size = UDim2.new(0, 16, 0, 16),
-			Image = tabIcon or Icons.Circle,
+			Position = UDim2.new(0, 12, 0.5, -9),
+			Size = UDim2.new(0, 18, 0, 18),
+			Image = tabIcon or Rift.Icons.Circle,
 			ImageColor3 = Theme.TabInactive
 		})
 		
@@ -975,12 +907,12 @@ function UILibrary:CreateWindow(config)
 			Name = "Text",
 			Parent = TabButton,
 			BackgroundTransparency = 1,
-			Position = UDim2.new(0, 32, 0, 0),
-			Size = UDim2.new(1, -40, 1, 0),
+			Position = UDim2.new(0, 38, 0, 0),
+			Size = UDim2.new(1, -48, 1, 0),
 			Font = Enum.Font.GothamMedium,
 			Text = tabName,
 			TextColor3 = Theme.TabInactive,
-			TextSize = 12,
+			TextSize = 13,
 			TextXAlignment = Enum.TextXAlignment.Left
 		})
 		
@@ -989,8 +921,8 @@ function UILibrary:CreateWindow(config)
 			Parent = TabButton,
 			BackgroundColor3 = accentColor,
 			BorderSizePixel = 0,
-			Position = UDim2.new(0, -3, 0.5, -10),
-			Size = UDim2.new(0, 3, 0, 20),
+			Position = UDim2.new(0, -4, 0.5, -12),
+			Size = UDim2.new(0, 4, 0, 24),
 			Visible = false
 		})
 		
@@ -1013,10 +945,10 @@ function UILibrary:CreateWindow(config)
 		
 		local ContentPadding = Create("UIPadding", {
 			Parent = TabFrame,
-			PaddingLeft = UDim.new(0, 18),
-			PaddingRight = UDim.new(0, 18),
-			PaddingTop = UDim.new(0, 18),
-			PaddingBottom = UDim.new(0, 18)
+			PaddingLeft = UDim.new(0, 20),
+			PaddingRight = UDim.new(0, 20),
+			PaddingTop = UDim.new(0, 20),
+			PaddingBottom = UDim.new(0, 20)
 		})
 		
 		local ContentList = Create("UIListLayout", {
@@ -1036,36 +968,41 @@ function UILibrary:CreateWindow(config)
 		local function SelectTab()
 			if currentTab then
 				currentTab.Frame.Visible = false
-				Tween(currentTab.Button, {BackgroundColor3 = Theme.TabBackground}, 0.2)
-				currentTab.Button.Icon.ImageColor3 = Theme.TabInactive
-				currentTab.Button.Text.TextColor3 = Theme.TabInactive
+				Tween(currentTab.Button, {BackgroundColor3 = Theme.TabBackground}, 0.25)
+				Tween(currentTab.Button.Icon, {ImageColor3 = Theme.TabInactive}, 0.25)
+				Tween(currentTab.Button.Text, {TextColor3 = Theme.TabInactive}, 0.25)
 				currentTab.Button.Indicator.Visible = false
 			end
 			
 			currentTab = tab
 			TabFrame.Visible = true
-			Tween(TabButton, {BackgroundColor3 = Color3.fromRGB(40, 40, 48)}, 0.2)
-			TabIconImage.ImageColor3 = Theme.TabActive
-			TabText.TextColor3 = Theme.TabActive
+			Tween(TabButton, {BackgroundColor3 = Color3.fromRGB(38, 38, 46)}, 0.25)
+			Tween(TabIconImage, {ImageColor3 = accentColor}, 0.25)
+			Tween(TabText, {TextColor3 = Theme.TabActive}, 0.25)
 			ActiveIndicator.Visible = true
+			
+			TabFrame.CanvasPosition = Vector2.new(0, 0)
 		end
 		
 		TabButton.MouseButton1Click:Connect(function()
-			Tween(TabButton, {Size = UDim2.new(1, -8, 0, 34)}, 0.05).Completed:Connect(function()
-				Tween(TabButton, {Size = UDim2.new(1, -5, 0, 36)}, 0.05)
+			Tween(TabButton, {Size = UDim2.new(1, -8, 0, 38)}, 0.08).Completed:Connect(function()
+				Tween(TabButton, {Size = UDim2.new(1, -5, 0, 40)}, 0.08)
 			end)
+			Tween(TabIconImage, {Rotation = TabIconImage.Rotation + 360}, 0.4)
 			SelectTab()
 		end)
 		
 		TabButton.MouseEnter:Connect(function()
 			if currentTab ~= tab then
-				Tween(TabButton, {BackgroundColor3 = Color3.fromRGB(30, 30, 35)}, 0.2)
+				Tween(TabButton, {BackgroundColor3 = Color3.fromRGB(28, 28, 34)}, 0.2)
+				Tween(TabIconImage, {ImageColor3 = Color3.fromRGB(160, 160, 170)}, 0.2)
 			end
 		end)
 		
 		TabButton.MouseLeave:Connect(function()
 			if currentTab ~= tab then
 				Tween(TabButton, {BackgroundColor3 = Theme.TabBackground}, 0.2)
+				Tween(TabIconImage, {ImageColor3 = Theme.TabInactive}, 0.2)
 			end
 		end)
 		
@@ -1092,7 +1029,7 @@ function UILibrary:CreateWindow(config)
 			local SectionFrame = Create("Frame", {
 				Parent = TabFrame,
 				BackgroundTransparency = 1,
-				Size = UDim2.new(1, 0, 0, 38),
+				Size = UDim2.new(1, 0, 0, 42),
 				LayoutOrder = #TabFrame:GetChildren()
 			})
 			
@@ -1100,9 +1037,9 @@ function UILibrary:CreateWindow(config)
 				Name = "Icon",
 				Parent = SectionFrame,
 				BackgroundTransparency = 1,
-				Position = UDim2.new(0, 5, 0, 10),
-				Size = UDim2.new(0, 14, 0, 14),
-				Image = sectionIcon or Icons.Zap,
+				Position = UDim2.new(0, 6, 0, 12),
+				Size = UDim2.new(0, 16, 0, 16),
+				Image = sectionIcon or Rift.Icons.Zap,
 				ImageColor3 = accentColor
 			})
 			
@@ -1110,12 +1047,12 @@ function UILibrary:CreateWindow(config)
 				Name = "SectionLabel",
 				Parent = SectionFrame,
 				BackgroundTransparency = 1,
-				Position = UDim2.new(0, 24, 0, 9),
-				Size = UDim2.new(1, -30, 0, 20),
+				Position = UDim2.new(0, 28, 0, 11),
+				Size = UDim2.new(1, -35, 0, 22),
 				Font = Enum.Font.GothamBold,
 				Text = sectionName,
 				TextColor3 = accentColor,
-				TextSize = 13,
+				TextSize = 14,
 				TextXAlignment = Enum.TextXAlignment.Left
 			})
 			
@@ -1128,7 +1065,7 @@ function UILibrary:CreateWindow(config)
 			local LabelFrame = Create("Frame", {
 				Parent = TabFrame,
 				BackgroundTransparency = 1,
-				Size = UDim2.new(1, 0, 0, 32),
+				Size = UDim2.new(1, 0, 0, 36),
 				LayoutOrder = #TabFrame:GetChildren()
 			})
 			
@@ -1137,8 +1074,8 @@ function UILibrary:CreateWindow(config)
 					Name = "Icon",
 					Parent = LabelFrame,
 					BackgroundTransparency = 1,
-					Position = UDim2.new(0, 8, 0.5, -7),
-					Size = UDim2.new(0, 14, 0, 14),
+					Position = UDim2.new(0, 10, 0.5, -8),
+					Size = UDim2.new(0, 16, 0, 16),
 					Image = labelIcon,
 					ImageColor3 = Theme.TextDark
 				})
@@ -1148,12 +1085,12 @@ function UILibrary:CreateWindow(config)
 				Name = "Label",
 				Parent = LabelFrame,
 				BackgroundTransparency = 1,
-				Position = labelIcon and UDim2.new(0, 28, 0, 7) or UDim2.new(0, 8, 0, 7),
-				Size = labelIcon and UDim2.new(1, -36, 0, 18) or UDim2.new(1, -16, 0, 18),
+				Position = labelIcon and UDim2.new(0, 32, 0, 9) or UDim2.new(0, 10, 0, 9),
+				Size = labelIcon and UDim2.new(1, -42, 0, 18) or UDim2.new(1, -20, 0, 18),
 				Font = Enum.Font.Gotham,
 				Text = text,
 				TextColor3 = Theme.Text,
-				TextSize = 12,
+				TextSize = 13,
 				TextXAlignment = Enum.TextXAlignment.Left,
 				TextWrapped = true
 			})
@@ -1177,7 +1114,7 @@ function UILibrary:CreateWindow(config)
 			local ParagraphFrame = Create("Frame", {
 				Parent = TabFrame,
 				BackgroundTransparency = 1,
-				Size = UDim2.new(1, 0, 0, 70),
+				Size = UDim2.new(1, 0, 0, 80),
 				LayoutOrder = #TabFrame:GetChildren(),
 				ClipsDescendants = true
 			})
@@ -1187,8 +1124,8 @@ function UILibrary:CreateWindow(config)
 					Name = "Icon",
 					Parent = ParagraphFrame,
 					BackgroundTransparency = 1,
-					Position = UDim2.new(0, 8, 0, 8),
-					Size = UDim2.new(0, 14, 0, 14),
+					Position = UDim2.new(0, 10, 0, 10),
+					Size = UDim2.new(0, 16, 0, 16),
 					Image = paragraphIcon,
 					ImageColor3 = Theme.TextDark
 				})
@@ -1198,12 +1135,12 @@ function UILibrary:CreateWindow(config)
 				Name = "Paragraph",
 				Parent = ParagraphFrame,
 				BackgroundTransparency = 1,
-				Position = paragraphIcon and UDim2.new(0, 28, 0, 5) or UDim2.new(0, 8, 0, 5),
-				Size = paragraphIcon and UDim2.new(1, -36, 1, -10) or UDim2.new(1, -16, 1, -10),
+				Position = paragraphIcon and UDim2.new(0, 32, 0, 8) or UDim2.new(0, 10, 0, 8),
+				Size = paragraphIcon and UDim2.new(1, -42, 1, -16) or UDim2.new(1, -20, 1, -16),
 				Font = Enum.Font.Gotham,
 				Text = text,
 				TextColor3 = Theme.TextDark,
-				TextSize = 11,
+				TextSize = 12,
 				TextXAlignment = Enum.TextXAlignment.Left,
 				TextYAlignment = Enum.TextYAlignment.Top,
 				TextWrapped = true,
@@ -1228,7 +1165,7 @@ function UILibrary:CreateWindow(config)
 		function TabAPI:AddButton(config)
 			config = config or {}
 			local buttonText = config.text or "Button"
-			local buttonIcon = config.icon or Icons.MousePointer
+			local buttonIcon = config.icon or Rift.Icons.MousePointer
 			local callback = config.callback or function() end
 			
 			AddSeparator()
@@ -1236,7 +1173,7 @@ function UILibrary:CreateWindow(config)
 			local ButtonFrame = Create("Frame", {
 				Parent = TabFrame,
 				BackgroundTransparency = 1,
-				Size = UDim2.new(1, 0, 0, 45),
+				Size = UDim2.new(1, 0, 0, 50),
 				LayoutOrder = #TabFrame:GetChildren()
 			})
 			
@@ -1245,15 +1182,15 @@ function UILibrary:CreateWindow(config)
 				Parent = ButtonFrame,
 				BackgroundColor3 = Theme.Button,
 				BorderSizePixel = 0,
-				Position = UDim2.new(0, 0, 0, 6),
-				Size = UDim2.new(1, 0, 0, 34),
+				Position = UDim2.new(0, 0, 0, 8),
+				Size = UDim2.new(1, 0, 0, 38),
 				Font = Enum.Font.GothamBold,
 				Text = "",
 				AutoButtonColor = false
 			})
 			
 			Create("UICorner", {
-				CornerRadius = UDim.new(0, 8),
+				CornerRadius = UDim.new(0, 10),
 				Parent = Button
 			})
 			
@@ -1261,8 +1198,8 @@ function UILibrary:CreateWindow(config)
 				Name = "Icon",
 				Parent = Button,
 				BackgroundTransparency = 1,
-				Position = UDim2.new(0, 12, 0.5, -8),
-				Size = UDim2.new(0, 16, 0, 16),
+				Position = UDim2.new(0, 14, 0.5, -9),
+				Size = UDim2.new(0, 18, 0, 18),
 				Image = buttonIcon,
 				ImageColor3 = accentColor
 			})
@@ -1271,12 +1208,12 @@ function UILibrary:CreateWindow(config)
 				Name = "Text",
 				Parent = Button,
 				BackgroundTransparency = 1,
-				Position = UDim2.new(0, 36, 0, 0),
-				Size = UDim2.new(1, -48, 1, 0),
+				Position = UDim2.new(0, 40, 0, 0),
+				Size = UDim2.new(1, -65, 1, 0),
 				Font = Enum.Font.GothamBold,
 				Text = buttonText,
 				TextColor3 = Theme.Text,
-				TextSize = 12,
+				TextSize = 13,
 				TextXAlignment = Enum.TextXAlignment.Left
 			})
 			
@@ -1284,33 +1221,36 @@ function UILibrary:CreateWindow(config)
 				Name = "Arrow",
 				Parent = Button,
 				BackgroundTransparency = 1,
-				Position = UDim2.new(1, -26, 0.5, -6),
-				Size = UDim2.new(0, 12, 0, 12),
-				Image = Icons.ChevronRight,
+				Position = UDim2.new(1, -30, 0.5, -7),
+				Size = UDim2.new(0, 14, 0, 14),
+				Image = Rift.Icons.ChevronRight,
 				ImageColor3 = Theme.TextDark
 			})
 			
 			Button.MouseEnter:Connect(function()
 				Tween(Button, {BackgroundColor3 = Theme.ButtonHover}, 0.2)
-				Tween(Arrow, {Position = UDim2.new(1, -22, 0.5, -6)}, 0.2)
+				Tween(Arrow, {Position = UDim2.new(1, -24, 0.5, -7)}, 0.2)
+				Tween(ButtonIcon, {Rotation = 10}, 0.2)
 			end)
 			
 			Button.MouseLeave:Connect(function()
 				Tween(Button, {BackgroundColor3 = Theme.Button}, 0.2)
-				Tween(Arrow, {Position = UDim2.new(1, -26, 0.5, -6)}, 0.2)
+				Tween(Arrow, {Position = UDim2.new(1, -30, 0.5, -7)}, 0.2)
+				Tween(ButtonIcon, {Rotation = 0}, 0.2)
 			end)
 			
 			Button.MouseButton1Down:Connect(function()
-				Tween(Button, {Size = UDim2.new(1, -4, 0, 32), Position = UDim2.new(0, 2, 0, 7)}, 0.05)
-				Tween(ButtonIcon, {ImageColor3 = Color3.fromRGB(255, 255, 255)}, 0.05)
+				Tween(Button, {Size = UDim2.new(1, -6, 0, 36), Position = UDim2.new(0, 3, 0, 9)}, 0.06)
+				Tween(ButtonIcon, {ImageColor3 = Color3.fromRGB(255, 255, 255)}, 0.06)
 			end)
 			
 			Button.MouseButton1Up:Connect(function()
-				Tween(Button, {Size = UDim2.new(1, 0, 0, 34), Position = UDim2.new(0, 0, 0, 6)}, 0.05)
-				Tween(ButtonIcon, {ImageColor3 = accentColor}, 0.05)
+				Tween(Button, {Size = UDim2.new(1, 0, 0, 38), Position = UDim2.new(0, 0, 0, 8)}, 0.06)
+				Tween(ButtonIcon, {ImageColor3 = accentColor}, 0.06)
 			end)
 			
 			Button.MouseButton1Click:Connect(function()
+				Tween(ButtonIcon, {Rotation = ButtonIcon.Rotation + 360}, 0.5)
 				callback()
 			end)
 			
@@ -1343,7 +1283,7 @@ function UILibrary:CreateWindow(config)
 			local ToggleFrame = Create("Frame", {
 				Parent = TabFrame,
 				BackgroundTransparency = 1,
-				Size = UDim2.new(1, 0, 0, 45),
+				Size = UDim2.new(1, 0, 0, 50),
 				LayoutOrder = #TabFrame:GetChildren()
 			})
 			
@@ -1351,12 +1291,12 @@ function UILibrary:CreateWindow(config)
 				Name = "Label",
 				Parent = ToggleFrame,
 				BackgroundTransparency = 1,
-				Position = toggleIcon and UDim2.new(0, 28, 0, 13) or UDim2.new(0, 8, 0, 13),
-				Size = toggleIcon and UDim2.new(1, -100, 0, 20) or UDim2.new(1, -80, 0, 20),
+				Position = toggleIcon and UDim2.new(0, 32, 0, 15) or UDim2.new(0, 10, 0, 15),
+				Size = toggleIcon and UDim2.new(1, -105, 0, 22) or UDim2.new(1, -85, 0, 22),
 				Font = Enum.Font.Gotham,
 				Text = toggleText,
 				TextColor3 = Theme.Text,
-				TextSize = 12,
+				TextSize = 13,
 				TextXAlignment = Enum.TextXAlignment.Left
 			})
 			
@@ -1365,8 +1305,8 @@ function UILibrary:CreateWindow(config)
 					Name = "Icon",
 					Parent = ToggleFrame,
 					BackgroundTransparency = 1,
-					Position = UDim2.new(0, 8, 0.5, -7),
-					Size = UDim2.new(0, 14, 0, 14),
+					Position = UDim2.new(0, 10, 0.5, -8),
+					Size = UDim2.new(0, 16, 0, 16),
 					Image = toggleIcon,
 					ImageColor3 = Theme.TextDark
 				})
@@ -1377,8 +1317,8 @@ function UILibrary:CreateWindow(config)
 				Parent = ToggleFrame,
 				BackgroundColor3 = default and Theme.ToggleOn or Theme.ToggleOff,
 				BorderSizePixel = 0,
-				Position = UDim2.new(1, -55, 0, 10),
-				Size = UDim2.new(0, 50, 0, 26)
+				Position = UDim2.new(1, -58, 0, 12),
+				Size = UDim2.new(0, 54, 0, 28)
 			})
 			
 			Create("UICorner", {
@@ -1391,8 +1331,8 @@ function UILibrary:CreateWindow(config)
 				Parent = ToggleBackground,
 				BackgroundColor3 = Color3.fromRGB(255, 255, 255),
 				BorderSizePixel = 0,
-				Position = default and UDim2.new(1, -24, 0, 2) or UDim2.new(0, 2, 0, 2),
-				Size = UDim2.new(0, 22, 0, 22)
+				Position = default and UDim2.new(1, -26, 0, 2) or UDim2.new(0, 2, 0, 2),
+				Size = UDim2.new(0, 24, 0, 24)
 			})
 			
 			Create("UICorner", {
@@ -1404,9 +1344,9 @@ function UILibrary:CreateWindow(config)
 				Name = "Check",
 				Parent = ToggleCircle,
 				BackgroundTransparency = 1,
-				Position = UDim2.new(0.5, -5, 0.5, -5),
-				Size = UDim2.new(0, 10, 0, 10),
-				Image = Icons.Check,
+				Position = UDim2.new(0.5, -6, 0.5, -6),
+				Size = UDim2.new(0, 12, 0, 12),
+				Image = Rift.Icons.Check,
 				ImageColor3 = Theme.ToggleOn,
 				ImageTransparency = default and 0 or 1
 			})
@@ -1416,9 +1356,15 @@ function UILibrary:CreateWindow(config)
 			local function Toggle()
 				enabled = not enabled
 				
-				Tween(ToggleBackground, {BackgroundColor3 = enabled and Theme.ToggleOn or Theme.ToggleOff}, 0.25, Enum.EasingStyle.Quad)
-				Tween(ToggleCircle, {Position = enabled and UDim2.new(1, -24, 0, 2) or UDim2.new(0, 2, 0, 2)}, 0.25, Enum.EasingStyle.Back)
+				Tween(ToggleBackground, {BackgroundColor3 = enabled and Theme.ToggleOn or Theme.ToggleOff}, 0.3, Enum.EasingStyle.Quad)
+				Tween(ToggleCircle, {Position = enabled and UDim2.new(1, -26, 0, 2) or UDim2.new(0, 2, 0, 2)}, 0.3, Enum.EasingStyle.Back)
 				Tween(CheckIcon, {ImageTransparency = enabled and 0 or 1}, 0.2)
+				
+				if enabled then
+					Tween(CheckIcon, {Rotation = 360}, 0.3)
+				else
+					Tween(CheckIcon, {Rotation = 0}, 0.3)
+				end
 				
 				callback(enabled)
 			end
@@ -1465,7 +1411,7 @@ function UILibrary:CreateWindow(config)
 			local SliderFrame = Create("Frame", {
 				Parent = TabFrame,
 				BackgroundTransparency = 1,
-				Size = UDim2.new(1, 0, 0, 60),
+				Size = UDim2.new(1, 0, 0, 65),
 				LayoutOrder = #TabFrame:GetChildren()
 			})
 			
@@ -1473,12 +1419,12 @@ function UILibrary:CreateWindow(config)
 				Name = "Label",
 				Parent = SliderFrame,
 				BackgroundTransparency = 1,
-				Position = sliderIcon and UDim2.new(0, 28, 0, 5) or UDim2.new(0, 8, 0, 5),
-				Size = sliderIcon and UDim2.new(1, -90, 0, 18) or UDim2.new(1, -70, 0, 18),
+				Position = sliderIcon and UDim2.new(0, 32, 0, 5) or UDim2.new(0, 10, 0, 5),
+				Size = sliderIcon and UDim2.new(1, -95, 0, 18) or UDim2.new(1, -75, 0, 18),
 				Font = Enum.Font.Gotham,
 				Text = sliderText,
 				TextColor3 = Theme.Text,
-				TextSize = 12,
+				TextSize = 13,
 				TextXAlignment = Enum.TextXAlignment.Left
 			})
 			
@@ -1487,8 +1433,8 @@ function UILibrary:CreateWindow(config)
 					Name = "Icon",
 					Parent = SliderFrame,
 					BackgroundTransparency = 1,
-					Position = UDim2.new(0, 8, 0, 4),
-					Size = UDim2.new(0, 14, 0, 14),
+					Position = UDim2.new(0, 10, 0, 4),
+					Size = UDim2.new(0, 16, 0, 16),
 					Image = sliderIcon,
 					ImageColor3 = Theme.TextDark
 				})
@@ -1499,12 +1445,12 @@ function UILibrary:CreateWindow(config)
 				Parent = SliderFrame,
 				BackgroundColor3 = Theme.InputBackground,
 				BorderSizePixel = 0,
-				Position = UDim2.new(1, -65, 0, 2),
-				Size = UDim2.new(0, 60, 0, 24)
+				Position = UDim2.new(1, -70, 0, 2),
+				Size = UDim2.new(0, 65, 0, 26)
 			})
 			
 			Create("UICorner", {
-				CornerRadius = UDim.new(0, 6),
+				CornerRadius = UDim.new(0, 8),
 				Parent = ValueContainer
 			})
 			
@@ -1524,8 +1470,8 @@ function UILibrary:CreateWindow(config)
 				Parent = SliderFrame,
 				BackgroundColor3 = Theme.Separator,
 				BorderSizePixel = 0,
-				Position = UDim2.new(0, 8, 0, 35),
-				Size = UDim2.new(1, -16, 0, 8)
+				Position = UDim2.new(0, 10, 0, 38),
+				Size = UDim2.new(1, -20, 0, 10)
 			})
 			
 			Create("UICorner", {
@@ -1551,8 +1497,8 @@ function UILibrary:CreateWindow(config)
 				Parent = SliderBackground,
 				BackgroundColor3 = Color3.fromRGB(255, 255, 255),
 				BorderSizePixel = 0,
-				Position = UDim2.new((default - min) / (max - min), -9, 0.5, -9),
-				Size = UDim2.new(0, 18, 0, 18),
+				Position = UDim2.new((default - min) / (max - min), -10, 0.5, -10),
+				Size = UDim2.new(0, 20, 0, 20),
 				ZIndex = 2
 			})
 			
@@ -1574,7 +1520,7 @@ function UILibrary:CreateWindow(config)
 				local value = math.floor(min + (max - min) * pos)
 				
 				SliderFill.Size = UDim2.new(pos, 0, 1, 0)
-				SliderHandle.Position = UDim2.new(pos, -9, 0.5, -9)
+				SliderHandle.Position = UDim2.new(pos, -10, 0.5, -10)
 				ValueLabel.Text = tostring(value) .. suffix
 				
 				callback(value)
@@ -1583,7 +1529,7 @@ function UILibrary:CreateWindow(config)
 			SliderHandle.InputBegan:Connect(function(input)
 				if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
 					dragging = true
-					Tween(SliderHandle, {Size = UDim2.new(0, 22, 0, 22)}, 0.1)
+					Tween(SliderHandle, {Size = UDim2.new(0, 24, 0, 24)}, 0.1)
 				end
 			end)
 			
@@ -1603,7 +1549,7 @@ function UILibrary:CreateWindow(config)
 			UserInputService.InputEnded:Connect(function(input)
 				if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
 					if dragging then
-						Tween(SliderHandle, {Size = UDim2.new(0, 18, 0, 18)}, 0.1)
+						Tween(SliderHandle, {Size = UDim2.new(0, 20, 0, 20)}, 0.1)
 					end
 					dragging = false
 				end
@@ -1617,7 +1563,7 @@ function UILibrary:CreateWindow(config)
 				value = math.clamp(value, min, max)
 				local pos = (value - min) / (max - min)
 				SliderFill.Size = UDim2.new(pos, 0, 1, 0)
-				SliderHandle.Position = UDim2.new(pos, -9, 0.5, -9)
+				SliderHandle.Position = UDim2.new(pos, -10, 0.5, -10)
 				ValueLabel.Text = tostring(value) .. suffix
 				callback(value)
 			end
@@ -1642,7 +1588,7 @@ function UILibrary:CreateWindow(config)
 			local DropdownFrame = Create("Frame", {
 				Parent = TabFrame,
 				BackgroundTransparency = 1,
-				Size = UDim2.new(1, 0, 0, 42),
+				Size = UDim2.new(1, 0, 0, 46),
 				LayoutOrder = #TabFrame:GetChildren(),
 				ClipsDescendants = true
 			})
@@ -1651,12 +1597,12 @@ function UILibrary:CreateWindow(config)
 				Name = "Label",
 				Parent = DropdownFrame,
 				BackgroundTransparency = 1,
-				Position = dropdownIcon and UDim2.new(0, 28, 0, 5) or UDim2.new(0, 8, 0, 5),
+				Position = dropdownIcon and UDim2.new(0, 32, 0, 5) or UDim2.new(0, 10, 0, 5),
 				Size = dropdownIcon and UDim2.new(1, -20, 0, 16) or UDim2.new(1, -10, 0, 16),
 				Font = Enum.Font.Gotham,
 				Text = dropdownText,
 				TextColor3 = Theme.Text,
-				TextSize = 12,
+				TextSize = 13,
 				TextXAlignment = Enum.TextXAlignment.Left
 			})
 			
@@ -1665,8 +1611,8 @@ function UILibrary:CreateWindow(config)
 					Name = "Icon",
 					Parent = DropdownFrame,
 					BackgroundTransparency = 1,
-					Position = UDim2.new(0, 8, 0, 4),
-					Size = UDim2.new(0, 14, 0, 14),
+					Position = UDim2.new(0, 10, 0, 4),
+					Size = UDim2.new(0, 16, 0, 16),
 					Image = dropdownIcon,
 					ImageColor3 = Theme.TextDark
 				})
@@ -1677,8 +1623,8 @@ function UILibrary:CreateWindow(config)
 				Parent = DropdownFrame,
 				BackgroundColor3 = Theme.Button,
 				BorderSizePixel = 0,
-				Position = UDim2.new(0, 0, 0, 26),
-				Size = UDim2.new(1, 0, 0, 32),
+				Position = UDim2.new(0, 0, 0, 28),
+				Size = UDim2.new(1, 0, 0, 34),
 				Font = Enum.Font.Gotham,
 				Text = default or "Select option...",
 				TextColor3 = Theme.Text,
@@ -1688,7 +1634,7 @@ function UILibrary:CreateWindow(config)
 			})
 			
 			Create("UICorner", {
-				CornerRadius = UDim.new(0, 8),
+				CornerRadius = UDim.new(0, 10),
 				Parent = DropdownButton
 			})
 			
@@ -1696,9 +1642,9 @@ function UILibrary:CreateWindow(config)
 				Name = "Arrow",
 				Parent = DropdownButton,
 				BackgroundTransparency = 1,
-				Position = UDim2.new(1, -28, 0.5, -7),
+				Position = UDim2.new(1, -30, 0.5, -7),
 				Size = UDim2.new(0, 14, 0, 14),
-				Image = Icons.ChevronDown,
+				Image = Rift.Icons.ChevronDown,
 				ImageColor3 = Theme.TextDark
 			})
 			
@@ -1707,14 +1653,14 @@ function UILibrary:CreateWindow(config)
 				Parent = DropdownFrame,
 				BackgroundColor3 = Theme.Button,
 				BorderSizePixel = 0,
-				Position = UDim2.new(0, 0, 0, 62),
+				Position = UDim2.new(0, 0, 0, 66),
 				Size = UDim2.new(1, 0, 0, 0),
 				ClipsDescendants = true,
 				Visible = false
 			})
 			
 			Create("UICorner", {
-				CornerRadius = UDim.new(0, 8),
+				CornerRadius = UDim.new(0, 10),
 				Parent = OptionsFrame
 			})
 			
@@ -1733,11 +1679,11 @@ function UILibrary:CreateWindow(config)
 					Parent = OptionsFrame,
 					BackgroundColor3 = Theme.Button,
 					BorderSizePixel = 0,
-					Size = UDim2.new(1, 0, 0, 30),
+					Size = UDim2.new(1, 0, 0, 32),
 					Font = Enum.Font.Gotham,
 					Text = optionText,
 					TextColor3 = optionText == selectedOption and accentColor or Theme.Text,
-					TextSize = 11,
+					TextSize = 12,
 					AutoButtonColor = false
 				})
 				
@@ -1745,9 +1691,9 @@ function UILibrary:CreateWindow(config)
 					Name = "Check",
 					Parent = OptionButton,
 					BackgroundTransparency = 1,
-					Position = UDim2.new(1, -26, 0.5, -6),
+					Position = UDim2.new(1, -28, 0.5, -6),
 					Size = UDim2.new(0, 12, 0, 12),
-					Image = Icons.Check,
+					Image = Rift.Icons.Check,
 					ImageColor3 = accentColor,
 					ImageTransparency = optionText == selectedOption and 0 or 1
 				})
@@ -1776,7 +1722,7 @@ function UILibrary:CreateWindow(config)
 					Tween(ArrowIcon, {Rotation = 0}, 0.2)
 					task.wait(0.2)
 					OptionsFrame.Visible = false
-					DropdownFrame.Size = UDim2.new(1, 0, 0, 42)
+					DropdownFrame.Size = UDim2.new(1, 0, 0, 46)
 					
 					callback(optionText)
 				end)
@@ -1791,16 +1737,16 @@ function UILibrary:CreateWindow(config)
 				
 				if expanded then
 					OptionsFrame.Visible = true
-					local optionsHeight = math.min(#options * 32 + 8, 160)
+					local optionsHeight = math.min(#options * 34 + 8, 170)
 					Tween(OptionsFrame, {Size = UDim2.new(1, 0, 0, optionsHeight)}, 0.25, Enum.EasingStyle.Back)
 					Tween(ArrowIcon, {Rotation = 180}, 0.2)
-					DropdownFrame.Size = UDim2.new(1, 0, 0, 68 + optionsHeight)
+					DropdownFrame.Size = UDim2.new(1, 0, 0, 74 + optionsHeight)
 				else
 					Tween(OptionsFrame, {Size = UDim2.new(1, 0, 0, 0)}, 0.2)
 					Tween(ArrowIcon, {Rotation = 0}, 0.2)
 					task.wait(0.2)
 					OptionsFrame.Visible = false
-					DropdownFrame.Size = UDim2.new(1, 0, 0, 42)
+					DropdownFrame.Size = UDim2.new(1, 0, 0, 46)
 				end
 			end)
 			
@@ -1869,7 +1815,7 @@ function UILibrary:CreateWindow(config)
 			local InputFrame = Create("Frame", {
 				Parent = TabFrame,
 				BackgroundTransparency = 1,
-				Size = UDim2.new(1, 0, 0, 70),
+				Size = UDim2.new(1, 0, 0, 75),
 				LayoutOrder = #TabFrame:GetChildren()
 			})
 			
@@ -1877,12 +1823,12 @@ function UILibrary:CreateWindow(config)
 				Name = "Label",
 				Parent = InputFrame,
 				BackgroundTransparency = 1,
-				Position = inputIcon and UDim2.new(0, 28, 0, 5) or UDim2.new(0, 8, 0, 5),
+				Position = inputIcon and UDim2.new(0, 32, 0, 5) or UDim2.new(0, 10, 0, 5),
 				Size = inputIcon and UDim2.new(1, -20, 0, 16) or UDim2.new(1, -10, 0, 16),
 				Font = Enum.Font.Gotham,
 				Text = inputText,
 				TextColor3 = Theme.Text,
-				TextSize = 12,
+				TextSize = 13,
 				TextXAlignment = Enum.TextXAlignment.Left
 			})
 			
@@ -1891,8 +1837,8 @@ function UILibrary:CreateWindow(config)
 					Name = "Icon",
 					Parent = InputFrame,
 					BackgroundTransparency = 1,
-					Position = UDim2.new(0, 8, 0, 4),
-					Size = UDim2.new(0, 14, 0, 14),
+					Position = UDim2.new(0, 10, 0, 4),
+					Size = UDim2.new(0, 16, 0, 16),
 					Image = inputIcon,
 					ImageColor3 = Theme.TextDark
 				})
@@ -1903,26 +1849,26 @@ function UILibrary:CreateWindow(config)
 				Parent = InputFrame,
 				BackgroundColor3 = Theme.InputBackground,
 				BorderSizePixel = 0,
-				Position = UDim2.new(0, 0, 0, 26),
-				Size = UDim2.new(1, 0, 0, 36),
+				Position = UDim2.new(0, 0, 0, 28),
+				Size = UDim2.new(1, 0, 0, 40),
 				Font = Enum.Font.Code,
 				Text = default,
 				PlaceholderText = placeholder,
 				TextColor3 = Theme.Text,
 				PlaceholderColor3 = Theme.TextDark,
-				TextSize = 12,
+				TextSize = 13,
 				ClearTextOnFocus = false
 			})
 			
 			Create("UICorner", {
-				CornerRadius = UDim.new(0, 8),
+				CornerRadius = UDim.new(0, 10),
 				Parent = InputBox
 			})
 			
 			Create("UIPadding", {
 				Parent = InputBox,
-				PaddingLeft = UDim.new(0, 12),
-				PaddingRight = UDim.new(0, 12)
+				PaddingLeft = UDim.new(0, 14),
+				PaddingRight = UDim.new(0, 14)
 			})
 			
 			local Cursor = Create("Frame", {
@@ -1946,7 +1892,7 @@ function UILibrary:CreateWindow(config)
 			end
 			
 			InputBox.Focused:Connect(function()
-				Tween(InputBox, {BackgroundColor3 = Color3.fromRGB(28, 28, 32)}, 0.2)
+				Tween(InputBox, {BackgroundColor3 = Color3.fromRGB(24, 24, 28)}, 0.2)
 				cursorBlinking = true
 				task.spawn(BlinkCursor)
 			end)
@@ -1964,7 +1910,7 @@ function UILibrary:CreateWindow(config)
 					InputBox.Font,
 					Vector2.new(InputBox.AbsoluteSize.X, 1000)
 				)
-				Cursor.Position = UDim2.new(0, math.min(textSize.X + 12, InputBox.AbsoluteSize.X - 18), 0.25, 0)
+				Cursor.Position = UDim2.new(0, math.min(textSize.X + 14, InputBox.AbsoluteSize.X - 20), 0.25, 0)
 			end)
 			
 			local InputAPI = {}
@@ -1997,7 +1943,7 @@ function UILibrary:CreateWindow(config)
 			local KeybindFrame = Create("Frame", {
 				Parent = TabFrame,
 				BackgroundTransparency = 1,
-				Size = UDim2.new(1, 0, 0, 45),
+				Size = UDim2.new(1, 0, 0, 50),
 				LayoutOrder = #TabFrame:GetChildren()
 			})
 			
@@ -2005,12 +1951,12 @@ function UILibrary:CreateWindow(config)
 				Name = "Label",
 				Parent = KeybindFrame,
 				BackgroundTransparency = 1,
-				Position = keybindIcon and UDim2.new(0, 28, 0, 13) or UDim2.new(0, 8, 0, 13),
-				Size = keybindIcon and UDim2.new(1, -95, 0, 20) or UDim2.new(1, -75, 0, 20),
+				Position = keybindIcon and UDim2.new(0, 32, 0, 15) or UDim2.new(0, 10, 0, 15),
+				Size = keybindIcon and UDim2.new(1, -100, 0, 22) or UDim2.new(1, -80, 0, 22),
 				Font = Enum.Font.Gotham,
 				Text = keybindText,
 				TextColor3 = Theme.Text,
-				TextSize = 12,
+				TextSize = 13,
 				TextXAlignment = Enum.TextXAlignment.Left
 			})
 			
@@ -2019,8 +1965,8 @@ function UILibrary:CreateWindow(config)
 					Name = "Icon",
 					Parent = KeybindFrame,
 					BackgroundTransparency = 1,
-					Position = UDim2.new(0, 8, 0.5, -7),
-					Size = UDim2.new(0, 14, 0, 14),
+					Position = UDim2.new(0, 10, 0.5, -8),
+					Size = UDim2.new(0, 16, 0, 16),
 					Image = keybindIcon,
 					ImageColor3 = Theme.TextDark
 				})
@@ -2031,17 +1977,17 @@ function UILibrary:CreateWindow(config)
 				Parent = KeybindFrame,
 				BackgroundColor3 = Theme.Button,
 				BorderSizePixel = 0,
-				Position = UDim2.new(1, -80, 0, 7),
-				Size = UDim2.new(0, 80, 0, 32),
+				Position = UDim2.new(1, -90, 0, 9),
+				Size = UDim2.new(0, 90, 0, 34),
 				Font = Enum.Font.GothamBold,
 				Text = defaultKey and defaultKey.Name or "None",
 				TextColor3 = Theme.Text,
-				TextSize = 11,
+				TextSize = 12,
 				AutoButtonColor = false
 			})
 			
 			Create("UICorner", {
-				CornerRadius = UDim.new(0, 8),
+				CornerRadius = UDim.new(0, 10),
 				Parent = KeybindButton
 			})
 			
@@ -2049,9 +1995,9 @@ function UILibrary:CreateWindow(config)
 				Name = "KeyIcon",
 				Parent = KeybindButton,
 				BackgroundTransparency = 1,
-				Position = UDim2.new(0, 8, 0.5, -6),
+				Position = UDim2.new(0, 10, 0.5, -6),
 				Size = UDim2.new(0, 12, 0, 12),
-				Image = Icons.Key,
+				Image = Rift.Icons.Key,
 				ImageColor3 = accentColor
 			})
 			
@@ -2135,7 +2081,7 @@ function UILibrary:CreateWindow(config)
 			local ColorPickerFrame = Create("Frame", {
 				Parent = TabFrame,
 				BackgroundTransparency = 1,
-				Size = UDim2.new(1, 0, 0, 50),
+				Size = UDim2.new(1, 0, 0, 55),
 				LayoutOrder = #TabFrame:GetChildren(),
 				ClipsDescendants = true
 			})
@@ -2144,12 +2090,12 @@ function UILibrary:CreateWindow(config)
 				Name = "Label",
 				Parent = ColorPickerFrame,
 				BackgroundTransparency = 1,
-				Position = pickerIcon and UDim2.new(0, 28, 0, 16) or UDim2.new(0, 8, 0, 16),
-				Size = pickerIcon and UDim2.new(1, -70, 0, 18) or UDim2.new(1, -50, 0, 18),
+				Position = pickerIcon and UDim2.new(0, 32, 0, 18) or UDim2.new(0, 10, 0, 18),
+				Size = pickerIcon and UDim2.new(1, -75, 0, 20) or UDim2.new(1, -55, 0, 20),
 				Font = Enum.Font.Gotham,
 				Text = pickerText,
 				TextColor3 = Theme.Text,
-				TextSize = 12,
+				TextSize = 13,
 				TextXAlignment = Enum.TextXAlignment.Left
 			})
 			
@@ -2158,8 +2104,8 @@ function UILibrary:CreateWindow(config)
 					Name = "Icon",
 					Parent = ColorPickerFrame,
 					BackgroundTransparency = 1,
-					Position = UDim2.new(0, 8, 0.5, -7),
-					Size = UDim2.new(0, 14, 0, 14),
+					Position = UDim2.new(0, 10, 0.5, -8),
+					Size = UDim2.new(0, 16, 0, 16),
 					Image = pickerIcon,
 					ImageColor3 = Theme.TextDark
 				})
@@ -2170,14 +2116,14 @@ function UILibrary:CreateWindow(config)
 				Parent = ColorPickerFrame,
 				BackgroundColor3 = default,
 				BorderSizePixel = 0,
-				Position = UDim2.new(1, -50, 0, 10),
-				Size = UDim2.new(0, 45, 0, 32),
+				Position = UDim2.new(1, -55, 0, 12),
+				Size = UDim2.new(0, 50, 0, 34),
 				Text = "",
 				AutoButtonColor = false
 			})
 			
 			Create("UICorner", {
-				CornerRadius = UDim.new(0, 8),
+				CornerRadius = UDim.new(0, 10),
 				Parent = ColorPreview
 			})
 			
@@ -2192,14 +2138,14 @@ function UILibrary:CreateWindow(config)
 				Parent = ColorPickerFrame,
 				BackgroundColor3 = Theme.Header,
 				BorderSizePixel = 0,
-				Position = UDim2.new(0, 0, 0, 50),
+				Position = UDim2.new(0, 0, 0, 55),
 				Size = UDim2.new(1, 0, 0, 0),
 				ClipsDescendants = true,
 				Visible = false
 			})
 			
 			Create("UICorner", {
-				CornerRadius = UDim.new(0, 10),
+				CornerRadius = UDim.new(0, 12),
 				Parent = PickerPanel
 			})
 			
@@ -2208,8 +2154,8 @@ function UILibrary:CreateWindow(config)
 				Parent = PickerPanel,
 				BackgroundColor3 = Color3.fromRGB(255, 255, 255),
 				BorderSizePixel = 0,
-				Position = UDim2.new(0, 12, 0, 12),
-				Size = UDim2.new(1, -24, 0, 110)
+				Position = UDim2.new(0, 14, 0, 14),
+				Size = UDim2.new(1, -28, 0, 120)
 			})
 			
 			local HueGradient = Create("UIGradient", {
@@ -2226,7 +2172,7 @@ function UILibrary:CreateWindow(config)
 			})
 			
 			Create("UICorner", {
-				CornerRadius = UDim.new(0, 8),
+				CornerRadius = UDim.new(0, 10),
 				Parent = HueSlider
 			})
 			
@@ -2235,8 +2181,8 @@ function UILibrary:CreateWindow(config)
 				Parent = HueSlider,
 				BackgroundColor3 = Color3.fromRGB(255, 255, 255),
 				BorderSizePixel = 0,
-				Position = UDim2.new(0, -7, 0, 0),
-				Size = UDim2.new(0, 14, 1, 0),
+				Position = UDim2.new(0, -8, 0, 0),
+				Size = UDim2.new(0, 16, 1, 0),
 				ZIndex = 2
 			})
 			
@@ -2256,8 +2202,8 @@ function UILibrary:CreateWindow(config)
 				Parent = PickerPanel,
 				BackgroundColor3 = Color3.fromRGB(255, 255, 255),
 				BorderSizePixel = 0,
-				Position = UDim2.new(0, 12, 0, 132),
-				Size = UDim2.new(1, -24, 0, 14)
+				Position = UDim2.new(0, 14, 0, 144),
+				Size = UDim2.new(1, -28, 0, 16)
 			})
 			
 			local SatGradient = Create("UIGradient", {
@@ -2278,8 +2224,8 @@ function UILibrary:CreateWindow(config)
 				Parent = SaturationSlider,
 				BackgroundColor3 = Color3.fromRGB(255, 255, 255),
 				BorderSizePixel = 0,
-				Position = UDim2.new(0.5, -7, 0, -4),
-				Size = UDim2.new(0, 14, 0, 22),
+				Position = UDim2.new(0.5, -8, 0, -4),
+				Size = UDim2.new(0, 16, 0, 24),
 				ZIndex = 2
 			})
 			
@@ -2299,8 +2245,8 @@ function UILibrary:CreateWindow(config)
 				Parent = PickerPanel,
 				BackgroundColor3 = Color3.fromRGB(255, 255, 255),
 				BorderSizePixel = 0,
-				Position = UDim2.new(0, 12, 0, 156),
-				Size = UDim2.new(1, -24, 0, 14)
+				Position = UDim2.new(0, 14, 0, 170),
+				Size = UDim2.new(1, -28, 0, 16)
 			})
 			
 			local ValGradient = Create("UIGradient", {
@@ -2321,8 +2267,8 @@ function UILibrary:CreateWindow(config)
 				Parent = ValueSlider,
 				BackgroundColor3 = Color3.fromRGB(255, 255, 255),
 				BorderSizePixel = 0,
-				Position = UDim2.new(1, -7, 0, -4),
-				Size = UDim2.new(0, 14, 0, 22),
+				Position = UDim2.new(1, -8, 0, -4),
+				Size = UDim2.new(0, 16, 0, 24),
 				ZIndex = 2
 			})
 			
@@ -2341,12 +2287,12 @@ function UILibrary:CreateWindow(config)
 				Name = "RGB",
 				Parent = PickerPanel,
 				BackgroundTransparency = 1,
-				Position = UDim2.new(0, 12, 0, 180),
-				Size = UDim2.new(1, -24, 0, 20),
+				Position = UDim2.new(0, 14, 0, 196),
+				Size = UDim2.new(1, -28, 0, 22),
 				Font = Enum.Font.Code,
 				Text = "RGB: 255, 255, 255",
 				TextColor3 = Theme.TextDark,
-				TextSize = 11
+				TextSize = 12
 			})
 			
 			local expanded = false
@@ -2361,9 +2307,9 @@ function UILibrary:CreateWindow(config)
 			
 			local function UpdateFromColor(color)
 				hue, sat, val = color:ToHSV()
-				HueHandle.Position = UDim2.new(hue, -7, 0, 0)
-				SatHandle.Position = UDim2.new(sat, -7, 0, -4)
-				ValHandle.Position = UDim2.new(val, -7, 0, -4)
+				HueHandle.Position = UDim2.new(hue, -8, 0, 0)
+				SatHandle.Position = UDim2.new(sat, -8, 0, -4)
+				ValHandle.Position = UDim2.new(val, -8, 0, -4)
 				ColorPreview.BackgroundColor3 = color
 				RGBLabel.Text = string.format("RGB: %d, %d, %d", math.floor(color.R * 255), math.floor(color.G * 255), math.floor(color.B * 255))
 			end
@@ -2375,7 +2321,7 @@ function UILibrary:CreateWindow(config)
 					hueDragging = true
 					local pos = math.clamp((input.Position.X - HueSlider.AbsolutePosition.X) / HueSlider.AbsoluteSize.X, 0, 1)
 					hue = pos
-					HueHandle.Position = UDim2.new(pos, -7, 0, 0)
+					HueHandle.Position = UDim2.new(pos, -8, 0, 0)
 					UpdateColor()
 				end
 			end)
@@ -2385,7 +2331,7 @@ function UILibrary:CreateWindow(config)
 					satDragging = true
 					local pos = math.clamp((input.Position.X - SaturationSlider.AbsolutePosition.X) / SaturationSlider.AbsoluteSize.X, 0, 1)
 					sat = pos
-					SatHandle.Position = UDim2.new(pos, -7, 0, -4)
+					SatHandle.Position = UDim2.new(pos, -8, 0, -4)
 					UpdateColor()
 				end
 			end)
@@ -2395,7 +2341,7 @@ function UILibrary:CreateWindow(config)
 					valDragging = true
 					local pos = math.clamp((input.Position.X - ValueSlider.AbsolutePosition.X) / ValueSlider.AbsoluteSize.X, 0, 1)
 					val = pos
-					ValHandle.Position = UDim2.new(pos, -7, 0, -4)
+					ValHandle.Position = UDim2.new(pos, -8, 0, -4)
 					UpdateColor()
 				end
 			end)
@@ -2405,17 +2351,17 @@ function UILibrary:CreateWindow(config)
 					if hueDragging then
 						local pos = math.clamp((input.Position.X - HueSlider.AbsolutePosition.X) / HueSlider.AbsoluteSize.X, 0, 1)
 						hue = pos
-						HueHandle.Position = UDim2.new(pos, -7, 0, 0)
+						HueHandle.Position = UDim2.new(pos, -8, 0, 0)
 						UpdateColor()
 					elseif satDragging then
 						local pos = math.clamp((input.Position.X - SaturationSlider.AbsolutePosition.X) / SaturationSlider.AbsoluteSize.X, 0, 1)
 						sat = pos
-						SatHandle.Position = UDim2.new(pos, -7, 0, -4)
+						SatHandle.Position = UDim2.new(pos, -8, 0, -4)
 						UpdateColor()
 					elseif valDragging then
 						local pos = math.clamp((input.Position.X - ValueSlider.AbsolutePosition.X) / ValueSlider.AbsoluteSize.X, 0, 1)
 						val = pos
-						ValHandle.Position = UDim2.new(pos, -7, 0, -4)
+						ValHandle.Position = UDim2.new(pos, -8, 0, -4)
 						UpdateColor()
 					end
 				end
@@ -2434,13 +2380,13 @@ function UILibrary:CreateWindow(config)
 				
 				if expanded then
 					PickerPanel.Visible = true
-					Tween(PickerPanel, {Size = UDim2.new(1, 0, 0, 210)}, 0.25, Enum.EasingStyle.Back)
-					ColorPickerFrame.Size = UDim2.new(1, 0, 0, 265)
+					Tween(PickerPanel, {Size = UDim2.new(1, 0, 0, 230)}, 0.25, Enum.EasingStyle.Back)
+					ColorPickerFrame.Size = UDim2.new(1, 0, 0, 290)
 				else
 					Tween(PickerPanel, {Size = UDim2.new(1, 0, 0, 0)}, 0.2)
 					task.wait(0.2)
 					PickerPanel.Visible = false
-					ColorPickerFrame.Size = UDim2.new(1, 0, 0, 50)
+					ColorPickerFrame.Size = UDim2.new(1, 0, 0, 55)
 				end
 			end)
 			
@@ -2463,7 +2409,7 @@ function UILibrary:CreateWindow(config)
 		function TabAPI:AddImage(config)
 			config = config or {}
 			local imageId = config.image or ""
-			local imageSize = config.size or UDim2.new(1, 0, 0, 120)
+			local imageSize = config.size or UDim2.new(1, 0, 0, 140)
 			local callback = config.callback or function() end
 			
 			AddSeparator()
@@ -2471,7 +2417,7 @@ function UILibrary:CreateWindow(config)
 			local ImageFrame = Create("Frame", {
 				Parent = TabFrame,
 				BackgroundTransparency = 1,
-				Size = UDim2.new(1, 0, 0, imageSize.Y.Offset + 15),
+				Size = UDim2.new(1, 0, 0, imageSize.Y.Offset + 18),
 				LayoutOrder = #TabFrame:GetChildren()
 			})
 			
@@ -2480,7 +2426,7 @@ function UILibrary:CreateWindow(config)
 				Parent = ImageFrame,
 				BackgroundColor3 = Theme.Button,
 				BorderSizePixel = 0,
-				Position = UDim2.new(0, 0, 0, 8),
+				Position = UDim2.new(0, 0, 0, 10),
 				Size = imageSize,
 				Image = imageId,
 				ScaleType = Enum.ScaleType.Fit,
@@ -2488,7 +2434,7 @@ function UILibrary:CreateWindow(config)
 			})
 			
 			Create("UICorner", {
-				CornerRadius = UDim.new(0, 10),
+				CornerRadius = UDim.new(0, 12),
 				Parent = ImageButton
 			})
 			
@@ -2507,8 +2453,8 @@ function UILibrary:CreateWindow(config)
 			end)
 			
 			ImageButton.MouseButton1Click:Connect(function()
-				Tween(ImageButton, {Size = UDim2.new(imageSize.X.Scale, imageSize.X.Offset - 6, imageSize.Y.Scale, imageSize.Y.Offset - 6), Position = UDim2.new(0, 3, 0, 11)}, 0.05).Completed:Connect(function()
-					Tween(ImageButton, {Size = imageSize, Position = UDim2.new(0, 0, 0, 8)}, 0.05)
+				Tween(ImageButton, {Size = UDim2.new(imageSize.X.Scale, imageSize.X.Offset - 6, imageSize.Y.Scale, imageSize.Y.Offset - 6), Position = UDim2.new(0, 3, 0, 13)}, 0.05).Completed:Connect(function()
+					Tween(ImageButton, {Size = imageSize, Position = UDim2.new(0, 0, 0, 10)}, 0.05)
 				end)
 				callback()
 			end)
@@ -2538,17 +2484,17 @@ function UILibrary:CreateWindow(config)
 		local notifyIcon = config.icon
 		
 		local notifyColor = Theme.Accent
-		local notifyIconImage = notifyIcon or Icons.Info
+		local notifyIconImage = notifyIcon or Rift.Icons.Info
 		
 		if notifyType == "success" then
 			notifyColor = Theme.Success
-			notifyIconImage = Icons.CheckCircle
+			notifyIconImage = Rift.Icons.CheckCircle
 		elseif notifyType == "error" then
 			notifyColor = Theme.Error
-			notifyIconImage = Icons.X
+			notifyIconImage = Rift.Icons.X
 		elseif notifyType == "warning" then
 			notifyColor = Theme.Warning
-			notifyIconImage = Icons.AlertTriangle
+			notifyIconImage = Rift.Icons.AlertTriangle
 		end
 		
 		local NotificationFrame = Create("Frame", {
@@ -2556,13 +2502,13 @@ function UILibrary:CreateWindow(config)
 			Parent = ScreenGui,
 			BackgroundColor3 = Theme.Background,
 			BorderSizePixel = 0,
-			Position = UDim2.new(1, 20, 1, -110 - (#notifications * 100)),
-			Size = UDim2.new(0, 300, 0, 90),
+			Position = UDim2.new(1, 20, 1, -120 - (#notifications * 110)),
+			Size = UDim2.new(0, 320, 0, 100),
 			ZIndex = 200
 		})
 		
 		Create("UICorner", {
-			CornerRadius = UDim.new(0, 12),
+			CornerRadius = UDim.new(0, 14),
 			Parent = NotificationFrame
 		})
 		
@@ -2576,8 +2522,8 @@ function UILibrary:CreateWindow(config)
 			Name = "Shadow",
 			Parent = NotificationFrame,
 			BackgroundTransparency = 1,
-			Position = UDim2.new(0, -12, 0, -12),
-			Size = UDim2.new(1, 24, 1, 24),
+			Position = UDim2.new(0, -14, 0, -14),
+			Size = UDim2.new(1, 28, 1, 28),
 			ZIndex = 199,
 			Image = "rbxassetid://6015897843",
 			ImageColor3 = Color3.fromRGB(0, 0, 0),
@@ -2590,8 +2536,8 @@ function UILibrary:CreateWindow(config)
 			Name = "Icon",
 			Parent = NotificationFrame,
 			BackgroundTransparency = 1,
-			Position = UDim2.new(0, 15, 0, 15),
-			Size = UDim2.new(0, 24, 0, 24),
+			Position = UDim2.new(0, 18, 0, 18),
+			Size = UDim2.new(0, 26, 0, 26),
 			Image = notifyIconImage,
 			ImageColor3 = notifyColor,
 			ZIndex = 201
@@ -2601,12 +2547,12 @@ function UILibrary:CreateWindow(config)
 			Name = "Title",
 			Parent = NotificationFrame,
 			BackgroundTransparency = 1,
-			Position = UDim2.new(0, 48, 0, 12),
-			Size = UDim2.new(1, -80, 0, 22),
+			Position = UDim2.new(0, 52, 0, 14),
+			Size = UDim2.new(1, -90, 0, 24),
 			Font = Enum.Font.GothamBold,
 			Text = notifyTitle,
 			TextColor3 = notifyColor,
-			TextSize = 14,
+			TextSize = 15,
 			TextXAlignment = Enum.TextXAlignment.Left,
 			ZIndex = 201
 		})
@@ -2615,12 +2561,12 @@ function UILibrary:CreateWindow(config)
 			Name = "Text",
 			Parent = NotificationFrame,
 			BackgroundTransparency = 1,
-			Position = UDim2.new(0, 15, 0, 42),
-			Size = UDim2.new(1, -30, 0, 40),
+			Position = UDim2.new(0, 18, 0, 46),
+			Size = UDim2.new(1, -36, 0, 44),
 			Font = Enum.Font.Gotham,
 			Text = notifyText,
 			TextColor3 = Theme.Text,
-			TextSize = 12,
+			TextSize = 13,
 			TextXAlignment = Enum.TextXAlignment.Left,
 			TextWrapped = true,
 			ZIndex = 201
@@ -2630,9 +2576,9 @@ function UILibrary:CreateWindow(config)
 			Name = "Close",
 			Parent = NotificationFrame,
 			BackgroundTransparency = 1,
-			Position = UDim2.new(1, -32, 0, 10),
-			Size = UDim2.new(0, 22, 0, 22),
-			Image = Icons.X,
+			Position = UDim2.new(1, -36, 0, 12),
+			Size = UDim2.new(0, 24, 0, 24),
+			Image = Rift.Icons.X,
 			ImageColor3 = Theme.TextDark,
 			ZIndex = 201
 		})
@@ -2661,12 +2607,12 @@ function UILibrary:CreateWindow(config)
 			end
 			
 			for i, notif in ipairs(notifications) do
-				Tween(notif, {Position = UDim2.new(1, -320, 1, -110 - ((i - 1) * 100))}, 0.3)
+				Tween(notif, {Position = UDim2.new(1, -340, 1, -120 - ((i - 1) * 110))}, 0.3)
 			end
 		end
 		
 		local function CloseNotification()
-			Tween(NotificationFrame, {Position = UDim2.new(1, 20, 1, -110 - ((table.find(notifications, NotificationFrame) - 1) * 100))}, 0.3)
+			Tween(NotificationFrame, {Position = UDim2.new(1, 20, 1, -120 - ((table.find(notifications, NotificationFrame) - 1) * 110))}, 0.3)
 			Tween(NotificationFrame, {BackgroundTransparency = 1}, 0.3)
 			Tween(NotifyIcon, {ImageTransparency = 1}, 0.3)
 			Tween(NotifyTitle, {TextTransparency = 1}, 0.3)
@@ -2680,7 +2626,7 @@ function UILibrary:CreateWindow(config)
 			NotificationFrame:Destroy()
 		end
 		
-		Tween(NotificationFrame, {Position = UDim2.new(1, -320, 1, -110 - ((#notifications - 1) * 100))}, 0.4, Enum.EasingStyle.Back)
+		Tween(NotificationFrame, {Position = UDim2.new(1, -340, 1, -120 - ((#notifications - 1) * 110))}, 0.4, Enum.EasingStyle.Back)
 		Tween(ProgressBar, {Size = UDim2.new(0, 0, 0, 4)}, duration)
 		
 		CloseNotify.MouseButton1Click:Connect(CloseNotification)
@@ -2707,4 +2653,4 @@ function UILibrary:CreateWindow(config)
 	return WindowAPI
 end
 
-return UILibrary
+return Rift
